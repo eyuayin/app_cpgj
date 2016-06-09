@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>login | Strass</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin panel developed with the Bootstrap from Twitter.">
+    <meta name="author" content="travis">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">瑜伽馆会员管理系统</a>
+            <div class="btn-group pull-right">
+                <a class="btn" href="my-profile.html"><i class="icon-user"></i> Admin</a>
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="caret"></span>
+                </a>
+            </div>
+            <div class="nav-collapse">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <div class="span9">
+            <div class="row-fluid">
+                <div class="page-header">
+                    <h1>Login <small>登录管理系统</small></h1>
+                </div>
+                <form class="form-horizontal" action="login.php" method="post">
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="name">账号</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" id="name" name="name" required="required"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="passwd">密码</label>
+                            <div class="controls">
+                                <input type="password" class="input-xlarge" id="passwd" name="passwd" value="" required="required" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-success btn-large" value="登 录" /> <a class="btn" href="login.html">取消</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <footer class="well">
+        <a target="_blank" title="XX瑜伽">XX瑜伽</a> - 网站制作： <a href="#" title="南京沃卓" target="_blank">南京沃卓</a>
+    </footer>
+
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/input_change_card_type.js"></script>
+</body>
+</html>

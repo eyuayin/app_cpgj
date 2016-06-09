@@ -1,0 +1,21 @@
+<script src="../js/jquery.js" type="text/javascript"></script>
+<select id='deptid' name='deptid' class="select" onchange='deptChange()'>
+   <option value="normal">normal</option>
+   <option value="other">other</option>
+
+</select>
+<!-- 类型为其他时 需要填写其它部门 -->
+<input id='otherDept' name='otherDept' type="text" class="text" maxlength='50' style='display:none;'/>
+<script>
+    //js
+    // 根据切换是否显示其他部门输入框
+    function deptChange(){
+        var deptid = $('#deptid').val();
+        // alert('type:'+hytpye);
+        if(deptid=='other'){
+            $('#otherDept').show();
+        }else{
+            $('#otherDept').hide();
+        }
+    }
+</script>

@@ -1,0 +1,18 @@
+<html>  
+<head>  
+<title>js</title>  
+<script type="text/javascript">  
+    window.onload=function(){  
+        var div=document.getElementById("divid");  
+        var span=document.createElement("span");  
+        span.id="spanid";  
+        span.style.color="blue";  
+        span.innerHTML=" i am append span !"  
+        div.appendChild(span);  
+    }  
+</script>  
+</head>  
+<body>  
+    <div id="divid" style="color: red; font-size:80;">i am div !</div>  
+</body>  
+</html>  

@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <title>Users | Strass</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+	<meta name="description" content="Admin panel developed with the Bootstrap from Twitter."></meta>
+    <meta name="author" content="travis"></meta>
+    <link href="css/bootstrap.css" rel="stylesheet"></link>
+	<link href="css/site.css" rel="stylesheet"></link>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet"></link>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+<table width="200"> 
+<tr> 
+<td><b>ID</b></td> 
+<td><b>名称</b></td> 
+<td><b>操作</b></td> 
+</tr> 
+<tr> 
+<td><b>1</b></td> 
+<td class="caname"><b>哈哈</b></td> 
+<td><b>删除</b></td> 
+</tr> 
+<tr> 
+<td><b>2</b></td> 
+<td class="caname"><b>哈哈</b></td> 
+<td><b>删除</b></td> 
+</tr> 
+<tr> 
+<td><b>3</b></td> 
+<td class="caname"><b>哈哈</b></td> 
+<td><b>删除</b></td> 
+</tr> 
+</table> 
+</body>
+<script src="js/jquery.js"></script>
+<script >
+$(function() { 
+//获取class为caname的元素 
+$(".caname").click(function() { 
+var td = $(this); 
+var txt = td.text(); 
+var input = $("<input type='text' value='" + txt + "'/>"); 
+td.html(input); 
+input.click(function() { return false; }); 
+//获取焦点 
+input.trigger("focus"); 
+//文本框失去焦点后提交内容，重新变为文本 
+input.blur(function() { 
+var newtxt = $(this).val(); 
+//判断文本有没有修改 
+if (newtxt != txt) { 
+td.html(newtxt); }
+});
+});
+});
+</script>
