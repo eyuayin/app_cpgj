@@ -1,6 +1,8 @@
 <?php
         $openid = $_GET["openid"];
-?>
+
+        
+     print <<<EOT
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -46,52 +48,7 @@
         <input type="hidden" name="openid" value="<?php echo $openid;?>" id="openid_input"/>
 
   
-        <div class="div-class-header">星期一 / 十二月 3</div>
-        <table id="day1" cellpadding="6" cellspacing="0" width="100%">  
-            <tbody>
-              <volist name="data1" id="vo1">
-                <tr style="height: 60px;" onclick="book_class(this);" id="{$vo1['class_id']}">
-                  <td class="class-status"><input value="{$vo1['class_status']}"></td>
-                  <td class="td-class-time-valid">09:00</td>  
-                  <td class="td-class-info-valid"><div>基础瑜伽</div><div class="inner-small">环老师</div></td>
-                  <td class="td-right-valid1"><span><img src="wx_image/head.jpg" style="height: 50%;"></br>剩余席位：8</span></td>
-                  <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
-                </tr>
-              </volist>
-           </tbody>
-       </table>  
-
-  <div style="height:10px;"></div>
-  <div class="div-class-header">星期二 / 十二月 4</div>
-  <table id="day2" cellpadding="6" cellspacing="0" width="100%">  
-    <tbody>
-      <volist name="data2" id="vo2">
-        <tr style="height: 60px;" onclick="book_class(this);" id="{$vo2['class_id']}">
-          <td class="class-status"><input value="{$vo2['class_status']}"></td>
-          <td class="td-class-time-valid">10:00</td>  
-          <td class="td-class-info-valid"><div>普拉提</div><div class="inner-small">甘老师</div></td>
-          <td class="td-right-valid1"><span><img src="wx_image/head.jpg" style="height: 50%;"></br>剩余席位：0</span></td>
-          <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
-        </tr>
-      </volist>
-    </tbody>
-  </table>
-  
-  <div style="height:10px;"></div>
-  <div class="div-class-header">星期三 / 十二月 5</div>
-  <table id="day3" cellpadding="6" cellspacing="0" width="100%">  
-    <tbody>
-      <volist name="data3" id="vo3">
-        <tr style="height: 60px;" onclick="book_class(this);" id="{$vo3['class_id']}">
-          <td class="class-status"><input value="{$vo3['class_status']}"></td>
-          <td class="td-class-time-valid">18:00</td>  
-          <td class="td-class-info-valid"><div>球操</div><div class="inner-small">甘老师</div></td>
-          <td class="td-right-valid1"><span><img src="wx_image/head.jpg" style="height: 50%;"></br>剩余席位：6</span></td>
-          <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
-        </tr>
-      </volist>
-    </tbody>
-  </table>   
+        
     </div>
     <div role="tabpanel" class="tab-pane" id="min">every</div>
     <div role="tabpanel" class="tab-pane" id="private">one</div>
@@ -107,3 +64,28 @@
 
   </body>
 </html>
+EOT;
+
+    require("constant_var_define.php");
+
+    $conn = db_connect();
+    
+      //执行select查询语句，返回数据库操纵对象statement
+        $st = $conn->query("select * from class_detail_in_7_days ORDER BY date ASC");
+        //获得结果集，结果集就是一个二维数组
+        $rs = $st->fetchAll();
+        //var_dump($rs);
+
+        //显示所有记录
+        foreach ($rs as $value) {
+            //根据卡类型确定要查询的表名称
+                echo "<tbody>";
+                echo "<tr>";
+				echo "  <td >{$value[0]}</td>";  
+                echo "  <td>{$value[1]}</td>"; 
+                echo "  <td>{$value[2]}</td>"; 
+                echo "  <td>{$value[3]}</td>"; 
+                echo "  <td>{$value[4]}</td>";  
+    
+        }   
+?> 
