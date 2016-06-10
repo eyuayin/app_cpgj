@@ -23,12 +23,12 @@
     if(empty($input_card_id))
     {
         debug_output("按照姓名预约！");
-        $book_mode = BOOK_MODE_NAME;
+        $book_mode = "BOOK_MODE_NAME";
     }
     else if(empty($input_name))
     {
         debug_output("按照卡号预约！");
-        $book_mode = BOOK_MODE_CARD;
+        $book_mode = "BOOK_MODE_CARD";
     }
 
     $conn = db_connect();
@@ -94,7 +94,7 @@
         $db_member_id = 0;
         $db_card_type = 0;
 
-        if($book_mode == BOOK_MODE_CARD)    //按照卡号预约
+        if($book_mode == "BOOK_MODE_CARD")    //按照卡号预约
         {
             //根据card_id查出member_id和card_type
             debug_output("按照卡号预约！");
@@ -106,7 +106,7 @@
             $db_card_type = $result[1];
             debug_output("从DB中查出的card_type是".$db_card_type);
         }
-        else if($book_mode == BOOK_MODE_NAME)   //按照姓名预约
+        else if($book_mode == "BOOK_MODE_NAME")   //按照姓名预约
         {
             //根据name查出member_id和card_type
             debug_output("按照姓名预约！");

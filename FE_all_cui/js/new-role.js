@@ -1,9 +1,9 @@
 function showTip(tipTxt) {
-    //console.log("ru can",tipTxt);
-    //console.log("_______>in show tips");
+    console.log("ru can",tipTxt);
+    console.log("_______>in show tips");
     var div = document.createElement('div');
     div.innerHTML = '<div style="border: dotted; color:red"><p>' + tipTxt + '</p></div>';
-    //console.log("div",div);
+    console.log("div",div);
     var tipNode = div.firstChild;
     $("#wrap").after(tipNode);
     setTimeout(function () {
@@ -50,8 +50,8 @@ function tgSumbit(){
             return false;
         }
     if( ($.trim(card_id) == "" )&& ($.trim(name) == "" )){
-        //console.log("------->in 请输入card",$.trim(card_id));
-        //console.log("------->in 请输入name",$.trim(name));
+        console.log("------->in 请输入card",$.trim(card_id));
+        console.log("------->in 请输入name",$.trim(name));
         
         
         alert('卡号或姓名至少输入一个！');
@@ -66,7 +66,7 @@ function tgSumbit(){
     function send_info() {
     //判断输入是否为空
      var whether_go_back =   tgSumbit();
-    //console.log("whether_go_back",whether_go_back);
+    console.log("whether_go_back",whether_go_back);
         if(!whether_go_back){
            return;
         }
@@ -75,17 +75,20 @@ function tgSumbit(){
         var name = $("#name").val();
         var card_id = $("#cardNo").val();
         var select_class = $("#select_class").val();
-        var index_num = select_class.indexOf("*"); //确定*号的位置
-        var class_id = select_class.substr(index_num+1);
+        
+        //寻找 * 的index
+        console.log("index of * is:",select_class.indexOf('*'));
+        
+        var class_id = select_class.substr(select_class.indexOf('*')+1);
         var whether_wait = $("#whetherWait").val();
-        var select_day =$("#select_day").val();
-       //// var classroom = $("#classroom").val();
+       // var select_day =$("#select_day").val();
+       // var classroom = $("#classroom").val();
        // var location = $("#location").val();
-      //  console.log("classroom",classroom);
-        console.log("class_id：",class_id);
+        console.log("select_class",select_class);
+        console.log("class_id",class_id);
 
         //发请求给后台插入
-        $.post("../FE_all_cui/booking_class.php",
+        $.post("booking_class.php",
             {          
                 card_id: card_id,
                 name: name,
@@ -93,7 +96,7 @@ function tgSumbit(){
                 class_id: class_id
             },
             function (data, status) {
-               console.log("indata",data);
+                console.log("indata",data);
                 alert("数据：" + data);
             });
     };
@@ -104,19 +107,19 @@ function tgSumbit(){
        // console.log("--------->in");
          var select_day =$("#select_day").val();
 
-        $.post("../../search_db_class_info_cui.php",
+        $.post("../search_db_class_info_cui.php",
             {
                 day: select_day
             },
             function (data, status) {
                 //alert("数据：" + data + "\n状态：" + status);
-                // console.log("data------->",data);
+                 console.log("data------->",data);
                 var result = JSON.parse(data);
                 //console.log("result--------------->", result);
                 $('#select_class').empty();
                 result.forEach(function (e) {
-                    //console.log("in---------------------->");
-                    $('#select_class').append("<option >" + e + "</option>");
+                    console.log("in---------------------->");
+                  $('#select_class').append("<option >" + e + "</option>");
                 });
 
                 //success:function(data){
@@ -173,7 +176,7 @@ function tgSumbit(){
         //};
 
         //console.log("____>in document ready");
-        //获取时间
+        //获取近三天时间
         function GetDateStr(AddDayCount) {
 
             var dd = new Date();
@@ -185,54 +188,34 @@ function tgSumbit(){
             var m = dd.getMonth() + 1;//获取当前月份的日期
 
             var d = dd.getDate();
-			
-			if (m >= 1 && m<= 9) //月份前加0
-			{
-			  m = "0" + m;
-			  console.log("m is:",m);
-			}
-			
-			if (d >= 0 && d<= 9) //日期前加0
-			{
-              console.log("d is:",d);
-			  return y + "-" + m + "-" + "0"+d;
-			}
-		    else 
-			{
-			  console.log("below d is:",d);
-			  return y + "-" + m + "-" + d;
-			}
+
+            return y + "-" + m + "-" + d;
         }
-          
+
         //时间选项
-        //$("#select_day").prepend("<option>" + GetDateStr(0) + "</option>");//今天日期
-        //$("#select_day").append("<option>" + GetDateStr(1) + "</option>"); //明天日期
-        //$("#select_day").append("<option>" + GetDateStr(2) + "</option>"); //后天日期
-        //$("#select_day").append("<option>" + GetDateStr(3) + "</option>"); //大后天日期
-        
-		//今天日期
-		var todayDate = GetDateStr(0);
-		console.log("today is",todayDate);
-		
-		$("#select_day").val(todayDate);
-         
+        $("#select_day").prepend("<option>" + GetDateStr(0) + "</option>");//今天日期
+        $("#select_day").append("<option>" + GetDateStr(1) + "</option>"); //明天日期
+        $("#select_day").append("<option>" + GetDateStr(2) + "</option>"); //后天日期
+        $("#select_day").append("<option>" + GetDateStr(3) + "</option>"); //大后天日期
+
+
         //获取用户选择的日期
-        //var select_day =$("#select_day").val();
+        var select_day =$("#select_day").val();
         //console.log("select_day",select_day);
         //给服务器发请求并处理json文件
-        $.post("../../search_db_class_info_cui.php",
+        $.post("../search_db_class_info_cui.php",
             {
-                day: todayDate
+                day: select_day
             },
             function (data, status) {
                 //alert("数据：" + data + "\n状态：" + status);
-                // console.log("data------->",data);
-                var result = JSON.parse(data);
-                console.log("result--------------->", result);
-                result.forEach(function (e) {
+                 console.log("data1234------->",data);
+                //var result = JSON.parse(data);
+                //console.log("result--------------->", result);
+                //result.forEach(function (e) {
                     //  console.log("in---------------------->");
-                    $('#select_class').append("<option >" + e + "</option>");
-                });
+                //    $('#select_class').append("<option >" + e + "</option>");
+               // });
 
                 //success:function(data){
                 //    $.each( data,function(){

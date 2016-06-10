@@ -4,9 +4,9 @@
     //用户输入时间和会馆
     $get_day=$_POST['day'];
 	//echo $get_day;	
-	$get_location=$_POST['location'];
+	//$get_location=$_POST['location'];
 	
-	if($get_location == 2) //君子兰会馆课程查询
+	if("") //君子兰会馆课程查询
 	{
 		return;
 	}
