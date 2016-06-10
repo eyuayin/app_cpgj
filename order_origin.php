@@ -1,7 +1,7 @@
 <?php
-        $openid = $_GET["openid"];
-
-        
+        //$openid = $_GET["openid"];
+        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
+     
      print <<<EOT
 <html>
   <head>
@@ -70,22 +70,91 @@ EOT;
 
     $conn = db_connect();
     
+    
+  
       //执行select查询语句，返回数据库操纵对象statement
-        $st = $conn->query("select * from class_detail_in_7_days ORDER BY date ASC");
+      $st_cpgj = $conn->query("select * from member_info_table_cui where open_id='oqUOZwUXs9YeUF0uMyWr9-M8cH3U'");
+      $st_jzl = $conn->query("select * from member_info_table where open_id='oqUOZwUXs9YeUF0uMyWr9-M8cH3U'");
+
         //获得结果集，结果集就是一个二维数组
-        $rs = $st->fetchAll();
+        
+        $rs_cpgj = $st_cpgj->fetchAll();
+        $rs_jzl = $st_jzl->fetchAll();
+        
         //var_dump($rs);
 
+        if($rs_cpgj)
+        {
+            $st = $conn->query("select * from class_detail_in_7_days where location=1 ORDER BY date ASC");
+            //获得结果集，结果集就是一个二维数组
+            $rs = $st->fetchAll();
+            //var_dump($rs);
+        }
+        
+        else if($rs_jzl)
+        {
+            $st = $conn->query("select * from class_detail_in_7_days where location=2 ORDER BY date ASC");
+            //获得结果集，结果集就是一个二维数组
+            $rs = $st->fetchAll();
+            //var_dump($rs);
+        }
+        else
+        {echo "无权查看课程！";}
+        
+        
         //显示所有记录
         foreach ($rs as $value) {
-            //根据卡类型确定要查询的表名称
-                echo "<tbody>";
-                echo "<tr>";
-				echo "  <td >{$value[0]}</td>";  
-                echo "  <td>{$value[1]}</td>"; 
-                echo "  <td>{$value[2]}</td>"; 
-                echo "  <td>{$value[3]}</td>"; 
-                echo "  <td>{$value[4]}</td>";  
-    
+            echo "<div style='height:10px;'></div>";
+            
+            switch ($value[3])
+                {
+                case 1:
+                  $value[3] = "星期 日 ";
+                  break;
+                case 2:
+                  $value[3] =  " 星期 一 ";
+                  break;
+                case 3:
+                  $value[3] =  " 星期 二 ";
+                  break;
+                case 4:
+                  $value[3] =  " 星期 三 ";
+                  break;
+                case 5:
+                  $value[3] =  " 星期 四 ";
+                  break;
+                case 6:
+                  $value[3] =  " 星期 五 ";
+                  break;
+                case 7:
+                  $value[3] =  " 星期 六 ";
+                  break;
+                }
+                            
+            $value[9] = $value[7]-$value[8];  //计算剩余可约次数
+            
+            echo "<div class='div-class-header'> {$value[3]}/{$value[2]}</div>";
+            echo "<table id='day2' cellpadding='6' cellspacing='0' width='100%'>";
+            echo "<tbody>";
+            echo "<volist name='data2' id='vo2'>";
+            echo "<tr style='height: 60px;' onclick='book_class(this);'>";         
+            echo "<td class='td-class-time-valid'>{$value[4]}</td>" ;     
+            echo "<td class='td-class-info-valid'>";
+            echo "<div>{$value[0]}</div>";
+            echo "<div class='inner-small'>{$value[1]}</div>";
+            echo "</td>";          
+            echo " <td class='td-right-valid1'>";
+            echo "<span>";
+            echo "<img src='wx_image/head.jpg' style='height: 50%;'>";
+            echo "</br>剩余席位：{$value[9]}";
+            echo "</span>";
+            echo "</td>";        
+            echo "<td class='td-right-valid2'>";
+            echo "<img src='wx_image/right-arrow.jpg' style='height: 40%;'>";
+            echo "</td>" ;       
+            echo "</tr>"  ;       
+            echo " </volist>";       
+            echo "</tbody>";     
+            echo "</table>" ;       
         }   
 ?> 
