@@ -1,6 +1,6 @@
 <?php
        
-        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3B";
+        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
         //$openid = $_GET["openid"];          
      
      print <<<EOT
@@ -43,7 +43,7 @@
     <title>课程预约</title>
     <body style="margin:0">
         <div class="div-title">天环瑜伽</br><span class="inner-small">课程预约</span></div>
-        <input type="hidden" name="openid" value="<?php echo $openid;?>" id="openid_input"/>
+        <input type="hidden" name="openid" value="$openid" id="openid_input"/>
   
         
 EOT;
@@ -154,8 +154,8 @@ EOT;
 
     
         echo " </div>";
-        echo " <div role='tabpanel' class='tab-pane' id='min'>every</div>";
-        echo " <div role='tabpanel' class='tab-pane' id='private'>one</div>";
+        echo " <div role='tabpanel' class='tab-pane' id='min'>精品课微预约功能敬请期待！</div>";
+        echo " <div role='tabpanel' class='tab-pane' id='private'>私教课微预约功能敬请期待！</div>";
         echo "</div>";
         echo "</div>";
         

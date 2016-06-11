@@ -4,6 +4,8 @@
 	    var $v = $(dv);
          
            var class_id = $v.find("td:eq(4)").text();
+           
+           var whether_wait = 2;//useless variable
                     
             console.log("in");  
     
@@ -24,7 +26,7 @@
                 openId: open_id,
             //    day: select_day,
              //   selectClass: select_class,
-            //    whetherWait: whether_wait,
+                whetherWait: whether_wait,
                 class_id: class_id,
                 select_location: location
            //     classroom: class_room
