@@ -278,7 +278,7 @@
 
     function debug_output($data)
     {
-        //echo "$data<br />";
+        echo "$data<br />";
     }
 
     //设置输出字体

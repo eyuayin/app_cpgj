@@ -1,6 +1,7 @@
 <?php
         //$openid = $_GET["openid"];
-        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
+        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3B";
+                  
      
      print <<<EOT
 <html>
@@ -23,7 +24,6 @@
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
     
-     <script type="text/javascript" src="JS_weixin/generate_classes_7_days.js"></script>
 
 
   </head>
@@ -49,22 +49,11 @@
 
   
         
-    </div>
-    <div role="tabpanel" class="tab-pane" id="min">every</div>
-    <div role="tabpanel" class="tab-pane" id="private">one</div>
-  </div>
-
-  </div>
-
-
-
- 
-    
-	<script src="FE_all_cui/js/bootstrap.min.js"></script>
-
-  </body>
-</html>
 EOT;
+
+
+
+
 
     require("constant_var_define.php");
 
@@ -73,33 +62,37 @@ EOT;
     
   
       //执行select查询语句，返回数据库操纵对象statement
-      $st_cpgj = $conn->query("select * from member_info_table_cui where open_id='oqUOZwUXs9YeUF0uMyWr9-M8cH3U'");
-      $st_jzl = $conn->query("select * from member_info_table where open_id='oqUOZwUXs9YeUF0uMyWr9-M8cH3U'");
+      //$st_cpgj = $conn->query("select * from member_info_table_cui where open_id = '".$openid."'");
+      //debug_output("select * from member_info_table_cui where open_id = '".$openid."'");
+      $st_jzl = $conn->query("select * from member_info_table where open_id = '".$openid."'");
+      debug_output("select * from member_info_table where open_id = '".$openid."'");
 
         //获得结果集，结果集就是一个二维数组
         
-        $rs_cpgj = $st_cpgj->fetchAll();
-        $rs_jzl = $st_jzl->fetchAll();
+        //$rs_cpgj = $st_cpgj->fetchAll();
+        $rs_jzl = $st_jzl->fetchAll();   //
         
-        //var_dump($rs);
+        //var_dump($rs_cpgj);
+       // var_dump($rs_jzl);
 
-        if($rs_cpgj)
-        {
-            $st = $conn->query("select * from class_detail_in_7_days where location=1 ORDER BY date ASC");
-            //获得结果集，结果集就是一个二维数组
-            $rs = $st->fetchAll();
-            //var_dump($rs);
-        }
         
-        else if($rs_jzl)
+        //是君子兰会员
+        if($rs_jzl)
         {
             $st = $conn->query("select * from class_detail_in_7_days where location=2 ORDER BY date ASC");
             //获得结果集，结果集就是一个二维数组
             $rs = $st->fetchAll();
             //var_dump($rs);
         }
-        else
-        {echo "无权查看课程！";}
+        
+        //非君子兰会员
+        else 
+        {
+            $st = $conn->query("select * from class_detail_in_7_days where location=1 ORDER BY date ASC");
+            //获得结果集，结果集就是一个二维数组
+            $rs = $st->fetchAll();
+            //svar_dump($rs);
+        }
         
         
         //显示所有记录
@@ -157,4 +150,28 @@ EOT;
             echo "</tbody>";     
             echo "</table>" ;       
         }   
+        
+
+
+    
+        echo " </div>";
+        echo " <div role='tabpanel' class='tab-pane' id='min'>every</div>";
+        echo " <div role='tabpanel' class='tab-pane' id='private'>one</div>";
+        echo "</div>";
+        echo "</div>";
+
+
+
+ 
+    
+	    echo "<script src='FE_all_cui/js/bootstrap.min.js'></script>";
+
+        echo "</body>";
+        echo "</html>";
+
+          
+
+        
+  
+
 ?> 
