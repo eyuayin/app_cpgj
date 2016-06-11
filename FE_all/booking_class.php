@@ -23,12 +23,12 @@
     if(empty($input_card_id))
     {
         debug_output("按照姓名预约！");
-        $book_mode = BOOK_MODE_NAME;
+        $book_mode = "BOOK_MODE_NAME";
     }
     else if(empty($input_name))
     {
         debug_output("按照卡号预约！");
-        $book_mode = BOOK_MODE_CARD;
+        $book_mode = "BOOK_MODE_CARD";
     }
 
     $conn = db_connect();
@@ -94,7 +94,7 @@
         $db_member_id = 0;
         $db_card_type = 0;
 
-        if($book_mode == BOOK_MODE_CARD)    //按照卡号预约
+        if($book_mode == "BOOK_MODE_CARD")    //按照卡号预约
         {
             //根据card_id查出member_id和card_type
             debug_output("按照卡号预约！");
@@ -106,7 +106,7 @@
             $db_card_type = $result[1];
             debug_output("从DB中查出的card_type是".$db_card_type);
         }
-        else if($book_mode == BOOK_MODE_NAME)   //按照姓名预约
+        else if($book_mode == "BOOK_MODE_NAME")   //按照姓名预约
         {
             //根据name查出member_id和card_type
             debug_output("按照姓名预约！");
@@ -124,8 +124,8 @@
         if($db_card_type == TIME_CARD_TYPE) //计时卡
         {
             debug_output("计时卡");
-            $query_result = $conn->query("select card_status,card_priority,used_times,max_times,next_used_times,concrete_card_type from time_card_table where card_id='".$input_card_id."'");
-            debug_output("select card_status,card_priority,used_times,max_times,next_used_times,concrete_card_type from time_card_table where card_id='".$input_card_id."'");
+            $query_result = $conn->query("select card_status,card_priority,used_times,max_times,next_used_times,concrete_card_type,valid_begin_date,valid_end_date,pause_begin_date,pause_end_date from time_card_table where card_id='".$input_card_id."'");
+            debug_output("select card_status,card_priority,used_times,max_times,next_used_times,concrete_card_type,valid_begin_date,valid_end_date,pause_begin_date,pause_end_date from time_card_table where card_id='".$input_card_id."'");
             $result = $query_result->fetch();
             
             $db_card_status = $result[0];
@@ -140,7 +140,17 @@
             debug_output("从DB中查出的next_used_times是".$db_next_used_times);
             $concrete_card_type = $result[5];
             debug_output("从DB中查出的concrete_card_type是".$concrete_card_type);
+            $valid_begin_date = $result[6];
+            debug_output("从DB中查出的valid_begin_date是".$valid_begin_date);
+            $valid_end_date = $result[7];
+            debug_output("从DB中查出的valid_end_date是".$valid_end_date);
+            $pause_begin_date = $result[8];
+            debug_output("从DB中查出的pause_begin_date是".$pause_begin_date);
+            $pause_end_date = $result[9];
+            debug_output("从DB中查出的pause_end_date是".$pause_end_date);
+            
         }
+        
         else if($db_card_type == MEASURED_CARD_TYPE) //计次卡
         {
             debug_output("计次卡");
@@ -160,9 +170,11 @@
         
         if($db_card_status != 1)   //卡是非激活状态
         {
-            echo "您的会员卡不可用！请联系瑜伽馆工作人员！";
+            echo "您的会员卡没有激活！请联系瑜伽馆工作人员！";
             return;
         }
+        
+       
         
         
         //根据class_id获取到class_priority,max_user_number,selected_user_number,class_begin_time相应课程信息
@@ -215,8 +227,8 @@
             else
             {
                 //根据课程时间计算出当前是第几周
-                $cal_class_date = substr($db_class_begin_time, 0, 10);
-                $class_week = intval(date('W',strtotime($cal_class_date)));
+                $class_date = substr($db_class_begin_time, 0, 10);
+                $class_week = intval(date('W',strtotime($class_date)));
                 debug_output("课程是第：".$class_week."周；");
                 $this_week = intval(date('W',strtotime(TODAY_DATE)));
                 debug_output("今天是第：".$this_week."周；");
@@ -239,12 +251,28 @@
                     }
                     $which_week = 2;
                 }
-                else    //其他周的课程，按逻辑不可能选择到
-                {
-                    echo "预约出错，请联系瑜伽馆工作人员！";
-                    return;
-                }
+                //else    //其他周的课程，按逻辑不可能选择到
+                //{
+                //    echo "预约出错，请联系瑜伽馆工作人员！";
+               //     echo $class_week;
+                //    return;
+               // }
             }
+            
+            //判断会员卡有效日期是否在预约日期内
+            if($class_date<$valid_begin_date || $class_date > $valid_end_date) //会员卡不在有效期内
+            {
+                echo "预约日期不在该会员卡的有效范围内，无法预约！";
+                return;
+            }
+            
+            if($class_date>=$pause_begin_date && $class_date <= $pause_end_date) //会员卡停卡
+            {
+                echo "该会员卡已停卡，无法预约！";
+                return;
+            }
+            
+            
         }
         else if($db_card_type == MEASURED_CARD_TYPE) //计次卡
         {
@@ -285,7 +313,8 @@
             }
             else    //waiting_No小于零，不应该发生
             {
-                echo "预约出错！请联系瑜伽馆工作人员！";
+                echo "预约出错！请联系瑜伽馆工作人员nnnnnnnnnnnnnnnnnnn！" ;
+                echo $result[0];
                 return;
             }
         }

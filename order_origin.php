@@ -1,7 +1,7 @@
 <?php
-        //$openid = $_GET["openid"];
+       
         $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3B";
-                  
+        //$openid = $_GET["openid"];          
      
      print <<<EOT
 <html>
@@ -44,7 +44,6 @@
     <body style="margin:0">
         <div class="div-title">天环瑜伽</br><span class="inner-small">课程预约</span></div>
         <input type="hidden" name="openid" value="<?php echo $openid;?>" id="openid_input"/>
-
   
         
 EOT;
@@ -97,52 +96,54 @@ EOT;
         foreach ($rs as $value) {
             echo "<div style='height:10px;'></div>";
             
-            switch ($value[3])
+            switch ($value[4])
                 {
                 case 1:
-                  $value[3] = "星期 日 ";
+                  $value[4] = "星期 日 ";
                   break;
                 case 2:
-                  $value[3] =  " 星期 一 ";
+                  $value[4] =  " 星期 一 ";
                   break;
                 case 3:
-                  $value[3] =  " 星期 二 ";
+                  $value[4] =  " 星期 二 ";
                   break;
                 case 4:
-                  $value[3] =  " 星期 三 ";
+                  $value[4] =  " 星期 三 ";
                   break;
                 case 5:
-                  $value[3] =  " 星期 四 ";
+                  $value[4] =  " 星期 四 ";
                   break;
                 case 6:
-                  $value[3] =  " 星期 五 ";
+                  $value[4] =  " 星期 五 ";
                   break;
                 case 7:
-                  $value[3] =  " 星期 六 ";
+                  $value[4] =  " 星期 六 ";
                   break;
                 }
                             
-            $value[9] = $value[7]-$value[8];  //计算剩余可约次数
+            $value[10] = $value[8]-$value[9];  //计算剩余可约次数
             
-            echo "<div class='div-class-header'> {$value[3]}/{$value[2]}</div>";
+            echo "<div class='div-class-header'> {$value[4]}/{$value[3]}</div>";
             echo "<table id='day2' cellpadding='6' cellspacing='0' width='100%'>";
             echo "<tbody>";
             echo "<volist name='data2' id='vo2'>";
             echo "<tr style='height: 60px;' onclick='book_class(this);'>";         
-            echo "<td class='td-class-time-valid'>{$value[4]}</td>" ;     
+            echo "<td class='td-class-time-valid'>{$value[5]}</td>" ;     
             echo "<td class='td-class-info-valid'>";
-            echo "<div>{$value[0]}</div>";
-            echo "<div class='inner-small'>{$value[1]}</div>";
+            echo "<div>{$value[1]}</div>";
+            echo "<div class='inner-small'>{$value[2]}</div>";
             echo "</td>";          
             echo " <td class='td-right-valid1'>";
             echo "<span>";
             echo "<img src='wx_image/head.jpg' style='height: 50%;'>";
-            echo "</br>剩余席位：{$value[9]}";
+            echo "</br>剩余席位：{$value[10]}";
             echo "</span>";
             echo "</td>";        
             echo "<td class='td-right-valid2'>";
             echo "<img src='wx_image/right-arrow.jpg' style='height: 40%;'>";
-            echo "</td>" ;       
+            echo "</td>" ;  
+            echo "<td  style='DISPLAY:none'>{$value[0]}</td>";
+            echo "<td  style='DISPLAY:none'>{$value[7]}</td>";
             echo "</tr>"  ;       
             echo " </volist>";       
             echo "</tbody>";     
@@ -157,7 +158,7 @@ EOT;
         echo " <div role='tabpanel' class='tab-pane' id='private'>one</div>";
         echo "</div>";
         echo "</div>";
-
+        
 
 
  
