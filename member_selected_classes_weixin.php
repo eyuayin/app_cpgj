@@ -1,123 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta http-equiv="Cache-Control" content="no-cache" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="FE_all/css/bootstrap.css" rel="stylesheet"></link>
-        <link href="FE_all/css/site.css" rel="stylesheet"></link>
-        <link href="FE_all/css/bootstrap-responsive.css" rel="stylesheet"></link>
-        <script src="FE_all/js/jquery.js"></script>
-    </head>
-    <body style="width:1800px;height:1994px;margin-top:0px;margin-left:20px;transform:rotate(90deg);-ms-transform:rotate(90deg);-moz-transform:rotate(90deg);-webkit-transform:rotate(90deg);">
+﻿<?php
 
-        
-           
-               
-                   
-                        <div class="page-header">
-                            <h1>Selected class <small>已约课程列表</small></h1>
-                        </div>
-                        <table style="font-size: 45px;width:2500px">
-                            <thead>
-                                <tr style="height:300px;">
-                                    <!--<th>会员号</th> -->
-                                    <th style="border:1px solid #BAB3B3;">姓名</th>
-                                    <th style="border:1px solid #BAB3B3;">卡号</th>
-                                    <th style="border:1px solid #BAB3B3;">课程名</th>
-                                    <th style="border:1px solid #BAB3B3;">时间</th>
-                                    <th style="border:1px solid #BAB3B3;">取消</th>
-                                    <th style="border:1px solid #BAB3B3;">id</th>
-                                </tr>
-                            </thead>
-<?php
-    require("./constant_var_define.php");
-
-    $input_open_id = $_GET['openid'];
-    debug_output("输入的open_id是：".$input_open_id);
-
-    if(empty($input_open_id))
-    {
-        page_output("black", 15, "此微信号尚未绑定！");
-        //echo "此微信号尚未绑定！";
-        return;
-    }
-
-    //连接数据库的参数
-    $conn = db_connect();
-    
-    //根据open_id查出card_id,member_id和member_name
-    $query_result = $conn->query("select member_id,card_id,member_name from member_info_table where open_id='".$input_open_id."'");
-    debug_output("select member_id,card_id,member_name from member_info_table where open_id='".$input_open_id."'");
-    $result = $query_result->fetchAll();
-    if(empty($result))
-    {
-        page_output("black", 15, "此微信号尚未绑定，无法查询！");
-        //echo "此微信号尚未绑定，无法查询！";
-        return;
-    }
-    
-    //循环将所有输入的会员名字的课程列出来
-    foreach($result as $value)  //member_info_table 0:member_id 1:card_id 2:member_name
-    {
-        //根据查出的member_id到class_booking_table中查出此用户已选的课程
-        $query = $conn->query("select * from class_booking_table where member_id=$value[0] order by class_id");
-        debug_output("select * from class_booking_table where member_id=$value[0] order by class_id");
-        $class_booking_result = $query->fetchAll();
-
-        foreach($class_booking_result as $class_booking_value)  //class_booking_table 0:class_id 1:member_id 2:waiting_No
-        {
-            //到class_info_table表中查找出课程名称和课程时间
-            $query = $conn->query("select * from class_info_table where class_id=$class_booking_value[0]");
-            debug_output("select * from class_info_table where class_id=$class_booking_value[0]");
-            $class_info_result = $query->fetchAll();
-
-            foreach($class_info_result as $class_info_value)    //class_info_table 1:class_name 2:begin_time 
-            {
-                debug_output("查出来的课程开始时间是：".$class_info_value[2]);
-                //debug_output("时间转换：".strtotime('2015-06-03 12:15:00'));
-                //debug_output(date('Y-m-d', strtotime('2015-06-03 12:15:00')));
-                //debug_output(date('Y-m-d', strtotime($class_info_value[2])));
-                //if(date('Y-m-d', strtotime($class_info_value[2])) >= NOW_TIME)    //列出当前时间之后的所有已约课程
-                if($class_info_value[2] >= NOW_TIME)
-                {
 print <<<EOT
-                    <tbody>
-                    <tr class="$class_booking_value[4]" style="height:300px;">
-                    <td style="border:1px solid #BAB3B3;">{$value[2]}</td>
-                    <td style="border:1px solid #BAB3B3;">{$value[1]}</td>
-                    <td style="border:1px solid #BAB3B3;">{$class_info_value[1]}</td>
-                    <td style="border:1px solid #BAB3B3;">{$class_info_value[2]}</td>
-                    <td style="border:1px solid #BAB3B3;">
-                    <a href="cancel_booking_weixin.php?card_id=$value[1]&begin_time=$class_info_value[2]&class_id=$class_booking_value[0]">取消</a>
-                    </td>
-                    <td style="border:1px solid #BAB3B3;">$class_booking_value[0]</td>
-                    </tr>
-                     <script>
-                        $(document).ready(function () {
-                            console.log("dffr");
-                            if($class_booking_value[4] == 1){
-                                
-                                $(".1 a").attr('href','#'); 
-                                $(".1 a").removeAttr("onclick");
-                                $(".1 a").text('已取消');
-                                $(".1 td").css({'background-color':'#B3B3B3'});
-                            }
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link href="__PUBLIC__/Css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/Css/Wx.css" rel="stylesheet" type="text/css" />
 
-                        });
-                    </script>
-EOT;
+<title>已约课程</title>
+</head>
+<body style="margin:0">
+  <!-- Table markup-->  
+  <div class="div-title" style="line-height:40px;">我的课程</div>
+  
+  <div class="div-class-header">{$week1} / {$month1} {$date1}</div>
+  <table id="day1" cellpadding="6" cellspacing="0" width="100%">  
+    <tbody>
+      <volist name="data1" id="vo1">
+        <tr style="height: 60px;" onclick="cancel_class(this);" id="{$vo1['class_id']}">
+          <td class="class-status"><input value="{$vo1['class_status']}"></td>
+          <td class="hide-input"><input value="{$vo1['canceled']}"></td>
+          <td class="td-class-time-valid">{$vo1['class_begin_time']}</td>  
+          <td class="td-class-info-valid"><div>{$vo1['class_name']}</div><div class="inner-small">{$vo1['teacher_name']}</div></td>
+          <td class="td-right-valid1"><span>{$vo1['your_status']}</span></td>
+          <td class="td-right-valid2"><img src="__PUBLIC__/Images/wx/right-arrow.jpg" style="height: 40%;"></td>
+        </tr>
+      </volist>
+    </tbody>
+  </table>
 
-               }
-            }
-        }
-    }
-?>
-                        </table>
-                        
-                   
-            
-           
-       
-    </body>
+  <div style="height:10px;"></div>
+  <div class="div-class-header">{$week2} / {$month2} {$date2}</div>
+  <table id="day2" cellpadding="6" cellspacing="0" width="100%">  
+    <tbody>
+      <volist name="data2" id="vo2">
+        <tr style="height: 60px;" onclick="cancel_class(this);" id="{$vo2['class_id']}">
+          <td class="class-status"><input value="{$vo2['class_status']}"></td>
+          <td class="hide-input"><input value="{$vo2['canceled']}"></td>
+          <td class="td-class-time-valid">{$vo2['class_begin_time']}</td>  
+          <td class="td-class-info-valid"><div>{$vo2['class_name']}</div><div class="inner-small">{$vo2['teacher_name']}</div></td>
+          <td class="td-right-valid1"><span>{$vo2['your_status']}</span></td>
+          <td class="td-right-valid2"><img src="__PUBLIC__/Images/wx/right-arrow.jpg" style="height: 40%;"></td>
+        </tr>
+      </volist>
+    </tbody>
+  </table>
+  
+  <div style="height:10px;"></div>
+  <div class="div-class-header">{$week3} / {$month3} {$date3}</div>
+  <table id="day3" cellpadding="6" cellspacing="0" width="100%">  
+    <tbody>
+      <volist name="data3" id="vo3">
+        <tr style="height: 60px;" onclick="cancel_class(this);" id="{$vo3['class_id']}">
+          <td class="class-status"><input value="{$vo3['class_status']}"></td>
+          <td class="hide-input"><input value="{$vo3['canceled']}"></td>
+          <td class="td-class-time-valid">{$vo3['class_begin_time']}</td>  
+          <td class="td-class-info-valid"><div>{$vo3['class_name']}</div><div class="inner-small">{$vo3['teacher_name']}</div></td>
+          <td class="td-right-valid1"><span>{$vo3['your_status']}</span></td>
+          <td class="td-right-valid2"><img src="__PUBLIC__/Images/wx/right-arrow.jpg" style="height: 40%;"></td>
+        </tr>
+      </volist>
+    </tbody>
+  </table>
+  
+<script type="text/javascript" src="__PUBLIC__/Lib/jquery/1.9.1/jquery.min.js"></script> 
+<script>
+$(document).ready(function(){
+   $("#day1 tr").each(function(index, element){
+      var s = $(element).find(".class-status").children().val();
+      if(s == 0){
+        $(element).find(".td-class-time-valid").attr("class","td-class-time-invalid");
+        $(element).find(".td-class-info-valid").attr("class","td-class-info-invalid");
+        $(element).find(".td-right-valid1").children().remove();
+        $(element).find(".td-right-valid1").attr("class","td-right-invalid1");
+        $(element).find(".td-right-valid2").children().remove();
+        $(element).find(".td-right-valid2").attr("class","td-right-invalid2");
+      }else if(s == 2){
+        $(element).find(".td-class-time-valid").attr("class","td-class-time-invalid");
+        $(element).find(".td-class-info-valid").attr("class","td-class-info-invalid");
+        //$(element).find(".td-right-valid1").children().remove();
+        $(element).find(".td-right-valid1").attr("class","td-right-invalid1");
+        $(element).find(".td-right-valid2").children().remove();
+        $(element).find(".td-right-valid2").attr("class","td-right-invalid2");
+      }
+    });
+    $("#day2 tr").each(function(index, element){
+      var s = $(element).find(".class-status").children().val();
+      if(s == 0){
+        $(element).find(".td-class-time-valid").attr("class","td-class-time-invalid");
+        $(element).find(".td-class-info-valid").attr("class","td-class-info-invalid");
+        $(element).find(".td-right-valid1").children().remove();
+        $(element).find(".td-right-valid1").attr("class","td-right-invalid1");
+        $(element).find(".td-right-valid2").children().remove();
+        $(element).find(".td-right-valid2").attr("class","td-right-invalid2");
+      }else if(s == 2){
+        $(element).find(".td-class-time-valid").attr("class","td-class-time-invalid");
+        $(element).find(".td-class-info-valid").attr("class","td-class-info-invalid");
+        //$(element).find(".td-right-valid1").children().remove();
+        $(element).find(".td-right-valid1").attr("class","td-right-invalid1");
+        $(element).find(".td-right-valid2").children().remove();
+        $(element).find(".td-right-valid2").attr("class","td-right-invalid2");
+      }
+    });
+    $("#day3 tr").each(function(index, element){
+      var s = $(element).find(".class-status").children().val();
+      if(s == 0){
+        $(element).find(".td-class-time-valid").attr("class","td-class-time-invalid");
+        $(element).find(".td-class-info-valid").attr("class","td-class-info-invalid");
+        $(element).find(".td-right-valid1").children().remove();
+        $(element).find(".td-right-valid1").attr("class","td-right-invalid1");
+        $(element).find(".td-right-valid2").children().remove();
+        $(element).find(".td-right-valid2").attr("class","td-right-invalid2");
+      }else if(s == 2){
+        $(element).find(".td-class-time-valid").attr("class","td-class-time-invalid");
+        $(element).find(".td-class-info-valid").attr("class","td-class-info-invalid");
+        //$(element).find(".td-right-valid1").children().remove();
+        $(element).find(".td-right-valid1").attr("class","td-right-invalid1");
+        $(element).find(".td-right-valid2").children().remove();
+        $(element).find(".td-right-valid2").attr("class","td-right-invalid2");
+      }
+    });
+});
+
+function cancel_class(obj){
+  var id = $(obj).attr("id");
+  var status = $(obj).find(".hide-input").children().val();
+  location.href="__ROOT__/wx.php/Selectedclassinfo/Index/index/cid/"+id+"/status/"+status;
+}
+</script>
+</body>
 </html>
 
+EOT;
+
+?>
