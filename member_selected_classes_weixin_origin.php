@@ -81,6 +81,45 @@
                 if($class_info_value[2] >= NOW_TIME)
                 {
 print <<<EOT
+                    
+                    <div style="height:10px;"></div>
+                      <div class="div-class-header">{$class_info_value[2]}</div>
+                      <table id="day2" cellpadding="6" cellspacing="0" width="100%">  
+                        <tbody>
+                          <volist name="data2" id="vo2">
+                            <tr style="height: 60px;" onclick="cancel_class(this);" id="vo2class_id">
+                              <td class="class-status"><input value=2></td>
+                              <td class="hide-input"><input value="{$class_info_value[2]}"></td>
+                              <td class="td-class-time-valid">{$class_info_value[2]}</td>  
+                              <td class="td-class-info-valid"><div>{$class_info_value[1]}</div><div class="inner-small">teacher_name</div></td>
+                              <td class="td-right-valid1"><span>your_status</span></td>
+                              <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
+                            </tr>
+                          </volist>
+                        </tbody>
+                      </table>
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <tbody>
                     <tr class="$class_booking_value[4]" style="height:300px;">
                     <td style="border:1px solid #BAB3B3;">{$value[2]}</td>
