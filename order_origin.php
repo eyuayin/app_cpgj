@@ -19,8 +19,6 @@
     <link href="FE_all_cui/css/bootstrap.css" rel="stylesheet"></link>
 
     <link href="order.css" rel="stylesheet" type="text/css"></link>
-    <link href="order.css" rel="stylesheet" type="text/css"></link>
-    <link href="order.css" rel="stylesheet" type="text/css"></link>
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
     
@@ -165,6 +163,8 @@ EOT;
  
     
 	    echo "<script src='FE_all_cui/js/bootstrap.min.js'></script>";
+        echo "<script src='JS_weixin/order_new.js'></script>";
+
 
         echo "</body>";
         echo "</html>";
