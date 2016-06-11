@@ -8,8 +8,8 @@ print <<<EOT
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link href="__PUBLIC__/Css/style.css" rel="stylesheet" type="text/css" />
-<link href="__PUBLIC__/Css/Wx.css" rel="stylesheet" type="text/css" />
+<link href="wx_css/style.css" rel="stylesheet" type="text/css" />
+<link href="wx_css/Wx.css" rel="stylesheet" type="text/css" />
 
 <title>已约课程</title>
 </head>
@@ -17,57 +17,41 @@ print <<<EOT
   <!-- Table markup-->  
   <div class="div-title" style="line-height:40px;">我的课程</div>
   
-  <div class="div-class-header">{$week1} / {$month1} {$date1}</div>
+  <div class="div-class-header">week1 / month1 date1</div>
   <table id="day1" cellpadding="6" cellspacing="0" width="100%">  
     <tbody>
       <volist name="data1" id="vo1">
-        <tr style="height: 60px;" onclick="cancel_class(this);" id="{$vo1['class_id']}">
-          <td class="class-status"><input value="{$vo1['class_status']}"></td>
-          <td class="hide-input"><input value="{$vo1['canceled']}"></td>
-          <td class="td-class-time-valid">{$vo1['class_begin_time']}</td>  
-          <td class="td-class-info-valid"><div>{$vo1['class_name']}</div><div class="inner-small">{$vo1['teacher_name']}</div></td>
-          <td class="td-right-valid1"><span>{$vo1['your_status']}</span></td>
-          <td class="td-right-valid2"><img src="__PUBLIC__/Images/wx/right-arrow.jpg" style="height: 40%;"></td>
+        <tr style="height: 60px;" onclick="cancel_class(this);" id="class_id">
+          <td class="class-status"><input value=2></td>
+          <td class="hide-input"><input value="canceled"></td>
+          <td class="td-class-time-valid">class_begin_time</td>  
+          <td class="td-class-info-valid"><div>class_name</div><div class="inner-small">teacher_name</div></td>
+          <td class="td-right-valid1"><span>your_status</span></td>
+          <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
         </tr>
       </volist>
     </tbody>
   </table>
 
   <div style="height:10px;"></div>
-  <div class="div-class-header">{$week2} / {$month2} {$date2}</div>
+  <div class="div-class-header">week2 / month2 date2</div>
   <table id="day2" cellpadding="6" cellspacing="0" width="100%">  
     <tbody>
       <volist name="data2" id="vo2">
-        <tr style="height: 60px;" onclick="cancel_class(this);" id="{$vo2['class_id']}">
-          <td class="class-status"><input value="{$vo2['class_status']}"></td>
-          <td class="hide-input"><input value="{$vo2['canceled']}"></td>
-          <td class="td-class-time-valid">{$vo2['class_begin_time']}</td>  
-          <td class="td-class-info-valid"><div>{$vo2['class_name']}</div><div class="inner-small">{$vo2['teacher_name']}</div></td>
-          <td class="td-right-valid1"><span>{$vo2['your_status']}</span></td>
-          <td class="td-right-valid2"><img src="__PUBLIC__/Images/wx/right-arrow.jpg" style="height: 40%;"></td>
+        <tr style="height: 60px;" onclick="cancel_class(this);" id="vo2class_id">
+          <td class="class-status"><input value=2></td>
+          <td class="hide-input"><input value="canceled"></td>
+          <td class="td-class-time-valid">class_begin_time</td>  
+          <td class="td-class-info-valid"><div>class_name</div><div class="inner-small">teacher_name</div></td>
+          <td class="td-right-valid1"><span>your_status</span></td>
+          <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
         </tr>
       </volist>
     </tbody>
   </table>
+
   
-  <div style="height:10px;"></div>
-  <div class="div-class-header">{$week3} / {$month3} {$date3}</div>
-  <table id="day3" cellpadding="6" cellspacing="0" width="100%">  
-    <tbody>
-      <volist name="data3" id="vo3">
-        <tr style="height: 60px;" onclick="cancel_class(this);" id="{$vo3['class_id']}">
-          <td class="class-status"><input value="{$vo3['class_status']}"></td>
-          <td class="hide-input"><input value="{$vo3['canceled']}"></td>
-          <td class="td-class-time-valid">{$vo3['class_begin_time']}</td>  
-          <td class="td-class-info-valid"><div>{$vo3['class_name']}</div><div class="inner-small">{$vo3['teacher_name']}</div></td>
-          <td class="td-right-valid1"><span>{$vo3['your_status']}</span></td>
-          <td class="td-right-valid2"><img src="__PUBLIC__/Images/wx/right-arrow.jpg" style="height: 40%;"></td>
-        </tr>
-      </volist>
-    </tbody>
-  </table>
-  
-<script type="text/javascript" src="__PUBLIC__/Lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="FE_all_cui/js/jquery.min.js"></script> 
 <script>
 $(document).ready(function(){
    $("#day1 tr").each(function(index, element){
