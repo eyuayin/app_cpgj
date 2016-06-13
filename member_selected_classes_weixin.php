@@ -10,6 +10,7 @@ print <<<EOT
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link href="wx_css/style.css" rel="stylesheet" type="text/css" />
 <link href="wx_css/Wx.css" rel="stylesheet" type="text/css" />
+<script src='JS_weixin/'></script>
 
 <title>已约课程</title>
 </head>
@@ -104,6 +105,9 @@ require("./constant_var_define.php");
                   <td class="td-class-info-valid"><div>{$value[6]}</div><div class="inner-small">{$value[7]}</div></td>
                   <td class="td-right-valid1"><span>{$value[2]}</span></td>
                   <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
+                  <td style='DISPLAY:none'>{$value[4]}</td>
+                  <td style='DISPLAY:none'>{$input_open_id}</td>
+                  <td></td>
                 </tr>
               </volist>
             </tbody>
