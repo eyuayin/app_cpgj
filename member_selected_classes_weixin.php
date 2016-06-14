@@ -10,7 +10,8 @@ print <<<EOT
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link href="wx_css/style.css" rel="stylesheet" type="text/css" />
 <link href="wx_css/Wx.css" rel="stylesheet" type="text/css" />
-<script src='JS_weixin/'></script>
+<script type="text/javascript" src="FE_all_cui/js/jquery.min.js"></script> 
+<script src='JS_weixin/cancel_book.js'></script>
 
 <title>已约课程</title>
 </head>
@@ -115,9 +116,10 @@ require("./constant_var_define.php");
 EOT;
     }
 
-/*
+
   
-<script type="text/javascript" src="FE_all_cui/js/jquery.min.js"></script> 
+
+/*
 <script>
 $(document).ready(function(){
    $("#day1 tr").each(function(index, element){

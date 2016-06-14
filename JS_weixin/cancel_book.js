@@ -11,6 +11,10 @@ function cancel_class(v) {
        
         //³¡¹Ý
           var open_id = $v.find("td:eq(7)").text();
+          
+          var begin_date = $v.find("td:eq(7)").text();
+          
+          var begin_time = $v.find("td:eq(7)").text();
         
         // var begin_time = $v.find("td:eq(7)").text();
           
@@ -20,7 +24,7 @@ function cancel_class(v) {
         
         console.log("open_id",open_id);
         
-        $.post("../cancel_booking_weixin.php",
+        $.post("../cancel_booking_weixin_new.php",
             {
                 openId: open_id,
             //    day: select_day,
