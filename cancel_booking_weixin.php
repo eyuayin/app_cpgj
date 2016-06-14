@@ -3,37 +3,78 @@
 <?php
     require("./constant_var_define.php");
 
-    $input_card_id = $_GET['card_id'];
-    debug_output("输入的卡号是：".$input_card_id);
-    $input_class_id = $_GET['class_id'];
+    $input_class_id = $_POST['class_id'];
     debug_output("输入的class_id是：".$input_class_id);
-    $input_class_begin_time = $_GET['begin_time'];
-    debug_output("输入的上课时间是：".$input_class_begin_time);
-
+    
+    $open_id = $_POST['openId'];
+    debug_output("输入的open_id是：".$open_id);
+    //连接数据库的参数
+    $conn = db_connect();
+    
+    $query_result_view = $conn->query("select location, class_begin_time, date, member_id from member_booked_class_detail_view where class_id='".$input_class_id."' and open_id = '".$open_id."'");
+    debug_output("select location, class_begin_time, date, member_id from member_booked_class_detail_view where class_id='".$input_class_id."' and open_id = '".$open_id."'");
+    
+    $result_view = $query_result_view->fetch();
+    $db_member_id = $result_view[3];
+    $location = $result_view[0];
+    $class_begin_time = $result_view[1];
+    $date = $result_view[2];
+    
+    if($location == 1){
+        
+        $query_result = $conn->query("select card_type, card_id from member_info_table_cui where member_id='".$db_member_id."'");
+        debug_output("select card_type, card_id from member_info_table_cui where member_id='".$db_member_id."'");
+        
+         //到class_info_table中查出class_id,max_user_number,selected_user_number
+        $query_result_1 = $conn->query("select max_user_number,selected_user_number_cui from class_info_table where class_id='".$input_class_id."'");
+        debug_output("select max_user_number,selected_user_number_cui from class_info_table where class_id='".$input_class_id."'");
+    
+    }
+    
+    if($location == 2){
+        
+        $query_result = $conn->query("select card_type, card_id from member_info_table where member_id='".$db_member_id."'");
+        debug_output("select card_type, card_id from member_info_table where member_id='".$db_member_id."'");
+    
+         //到class_info_table中查出class_id,max_user_number,selected_user_number
+        $query_result_1 = $conn->query("select max_user_number,selected_user_number from class_info_table where class_id='".$input_class_id."'");
+        debug_output("select max_user_number,selected_user_number from class_info_table where class_id='".$input_class_id."'");
+    }
+    
+    
+    //$query_result = $conn->query("select card_type from member_info_table where member_id='".$input_card_id."'");
+    //debug_output("select card_type from member_info_table where card_id='".$input_card_id."'");
+    
+    //$query_result = $conn->query("select member_id,card_type from member_info_table where card_id='".$input_card_id."'");
+    //debug_output("select member_id,card_type from member_info_table where card_id='".$input_card_id."'");
+    $result = $query_result->fetch();
+    //$db_member_id = $result[0];
+    
     //取消限制：两小时内禁止取消
     debug_output("当前时间：".NOW_TIME);
     debug_output("当前时间两小时后是：".date('Y-m-d H:i:s',strtotime("+2 hour")));
+    
+    $input_class_begin_time = $date." ".$class_begin_time;
+    debug_output("获取的课程开始时间：".$input_class_begin_time);
+    
     if((date('Y-m-d H:i:s',strtotime("+2 hour"))) > $input_class_begin_time)   //比当前时间多两小时，如果此时间大于课程开始时间，则禁止取消
     {
         echo "已经超出取消截止时间，无法取消！";
         return;
     }
 
-    //连接数据库的参数
-    $conn = db_connect();
+    
     
     //从member_info_table中查出member_id和card_type
-    $query_result = $conn->query("select member_id,card_type from member_info_table where card_id='".$input_card_id."'");
-    debug_output("select member_id,card_type from member_info_table where card_id='".$input_card_id."'");
-    $result = $query_result->fetch();
-    $db_member_id = $result[0];
-    debug_output("从DB中查出的member_id是".$db_member_id);
-    $db_card_type = $result[1];
+    //$query_result = $conn->query("select member_id,card_type from member_info_table where card_id='".$input_card_id."'");
+    //debug_output("select member_id,card_type from member_info_table where card_id='".$input_card_id."'");
+    //$result = $query_result->fetch();
+    //$db_member_id = $result[0];
+    //debug_output("从DB中查出的member_id是".$db_member_id);
+    $db_card_type = $result[0];
     debug_output("从DB中查出的card_type是".$db_card_type);
 
-    //到class_info_table中查出class_id,max_user_number,selected_user_number
-    $query_result = $conn->query("select max_user_number,selected_user_number from class_info_table where class_id=$input_class_id");
-    debug_output("select max_user_number,selected_user_number from class_info_table where class_id=$input_class_id");
+   
     $result = $query_result->fetch();
     
     $db_max_user_number = $result[0];
@@ -41,6 +82,7 @@
     $db_selected_user_number = $result[1];
     debug_output("从DB中查出的selected_user_number是".$db_selected_user_number);
 
+    /*
     //从class_booking_table中根据member_id，class_id找出对应的waiting_No
     $query_result = $conn->query("select waiting_No from class_booking_table where member_id=$db_member_id and class_id=$input_class_id");
     debug_output("select waiting_No from class_booking_table where member_id=$db_member_id and class_id=$input_class_id");
@@ -56,6 +98,8 @@
         echo "此课程没有预约信息，无需取消！";
         return;
     }
+    
+    /*
 
     //在取消之前，先到对应的卡信息表中查看本月已经取消过的次数是否已达最大值
     if($db_card_type == TIME_CARD_TYPE) //计时卡
@@ -93,6 +137,8 @@
             return;
         }
     }
+    
+    */
 
     //对于要取消的预约，更新该条记录的canceled字段为1，表示此条预约已取消
     $query_result = $conn->query("update class_booking_table set canceled=1 where member_id=$db_member_id and class_id=$input_class_id");
