@@ -26,7 +26,7 @@ print <<<EOT
     <div class="container-fluid">
       <div class="row-fluid">
        
-        <div class="span9">
+        <div>
 		  <div class="row-fluid">
 			<div class="page-header">
 				    <h1>Users <small>会员信息列表</small></h1>
@@ -40,20 +40,20 @@ print <<<EOT
 				<thead>
 					<tr>
 						<th>会员编号</th> 
-			            <th>姓名</th>
-			            <th>性别</th> 
+			            <th style="width: 6%">姓名</th>
+			            <th >性别</th> 
 			            <th>身份证号</th>
-			            <th>生日</th>
+			            <th style="width:8%">生日</th>
 			            <th>手机号码</th>
 			            <th>会员卡号</th>
 			            <th>微信号码</th>
-			            <th>会员卡类型</th>
-                        <th>会员卡状态</th>
-			            <th>会员卡开卡日期</th>
-			            <th>会员卡失效日期</th>
-			            <th>会员卡冻结起始日期</th>
-			            <th>会员卡冻结截止日期</th>
-					    <th>备注</th>
+			            <th style="width:4%">会员卡类型</th>
+                        <th style="width:6%">会员卡状态</th>
+			            <th style="width:8%">会员卡开卡日期</th>
+			            <th style="width:8%">会员卡失效日期</th>
+			            <th style="width:8%">会员卡冻结起始日期</th>
+			            <th style="width:8%">会员卡冻结截止日期</th>
+					    <th style="width: 19%">备注</th>
 
 						
                        
