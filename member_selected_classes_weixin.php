@@ -11,7 +11,7 @@ print <<<EOT
 <link href="wx_css/style.css" rel="stylesheet" type="text/css" />
 <link href="wx_css/Wx.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="FE_all_cui/js/jquery.min.js"></script> 
-<script src='JS_weixin/cancel_book.js'></script>
+<script src="JS_weixin/cancel_book.js" charset='gbk'></script>
 
 <title>已约课程</title>
 </head>

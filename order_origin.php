@@ -164,7 +164,7 @@ EOT;
  
     
 	    echo "<script src='FE_all_cui/js/bootstrap.min.js'></script>";
-        echo "<script src='JS_weixin/order_new.js'></script>";
+        echo "<script src='JS_weixin/order_new.js' charset='gbk'></script>";
 
 
         echo "</body>";
