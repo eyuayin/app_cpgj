@@ -47,8 +47,10 @@ print <<<EOT
                         <li><a href="search_and_update_class.php">课程查询</a></li>
                         <li class="divider"></li>
                         <li><a href="all_class_info.php">所有课程列表</a></li>
-                        <li class="divider"></li>
+                         <li class="divider"></li>
                         <li><a href="upload_class.php" target="_blank">导入本月课程</a></li>
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="upload_class.php" target="_blank">导入本月课程</a></li>-->
                     </ul>
                 </li>
 				 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">精品课管理 <b class="caret"></b></a>
@@ -62,8 +64,15 @@ print <<<EOT
                         <li><a href="booking_class_private_new.php">私教预约</a></li>
                     </ul>
                 </li>
-				<li class="dropdown"><a href="../FE_all_cui/index.php">切换翠屏国际馆</a>
-			    </li>
+                
+                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">选择会馆<b class="caret"></b></a>
+                    <ul class="dropdown-menu">                       
+                        <li><a href="../FE_all_cui/index.php">翠屏国际会馆</a></li>
+                         <li class="divider"></li>
+                        <li><a href="index.php">君子兰会馆</a></li>
+                       
+                    </ul>
+                </li>
                 </ul>
 
           </div>
