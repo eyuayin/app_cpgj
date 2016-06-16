@@ -39,21 +39,21 @@ print <<<EOT
 			<table class="table table-striped table-bordered table-condensed">
 				<thead>
 					<tr>
-						<th>会员编号</th> 
-			            <th>姓名</th>
-			            <th>性别</th> 
-			            <th>身份证号</th>
-			            <th>生日</th>
-			            <th>手机号码</th>
-			            <th>会员卡号</th>
-			            <th>微信号码</th>
-			            <th>会员卡类型</th>
-                        <th>会员卡状态</th>
-			            <th>会员卡开卡日期</th>
-			            <th>会员卡失效日期</th>
-			            <th>会员卡冻结起始日期</th>
-			            <th>会员卡冻结截止日期</th>
-					    <th>备注</th>
+						<th style="width:3%">会员编号</th> 
+			            <th style="width:4%">姓名</th>
+			            <th style="width:3%">性别</th> 
+			            <th style="width:3%">身份证号</th>
+			            <th style="width:3%">生日</th>
+			            <th style="width:3%">手机号码</th>
+			            <th style="width:3%">会员卡号</th>
+			            <th style="width:8%">微信号码</th>
+			            <th style="width:3%">会员卡类型</th>
+                        <th style="width:3%">会员卡状态</th>
+			            <th style="width:5%">会员卡开卡日期</th>
+			            <th style="width:5%">会员卡失效日期</th>
+			            <th style="width:3%">会员卡冻结起始日期</th>
+			            <th style="width:3%">会员卡冻结截止日期</th>
+					    <th style="width: 36%">备注</th>
 
 						
                        
