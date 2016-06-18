@@ -3,17 +3,16 @@
 
     //用户输入时间和会馆
     $get_day=$_POST['day'];
-	$get_location=$_POST['location'];
+	//echo $get_day;	
+	//$get_location=$_POST['location'];
 	
-	if($get_location == 1)
+	if("") //君子兰会馆课程查询
 	{
 		return;
 	}
 	
-	else
+	else  //翠屏会馆课程查询
 	{
-			
-			//echo $get_day;
 			if(empty($get_day))
 			{      
 				return;
@@ -44,20 +43,20 @@
 			/*
 			if(strtotime($current_date)==strtotime($get_day))
 			{
-				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table where class_begin_time between '".$current_time."' and '".$tomorrow_begin_time."'");
+				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table_cui where class_begin_time between '".$current_time."' and '".$tomorrow_begin_time."'");
 				//echo $current_time,$tomorrow_begin_time;
 			}
 			else if(strtotime($tomorrow_date)==strtotime($get_day))
 			{
-				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table where class_begin_time between '".$tomorrow_begin_time."' and '".$after_tomorrow_begin_time."'");
+				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table_cui where class_begin_time between '".$tomorrow_begin_time."' and '".$after_tomorrow_begin_time."'");
 			}
 			else if(strtotime($after_tomorrow_date)==strtotime($get_day))
 			{
-				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table where class_begin_time between '".$after_tomorrow_begin_time."' and '".$after_tomorrow_over_time."'");
+				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table_cui where class_begin_time between '".$after_tomorrow_begin_time."' and '".$after_tomorrow_over_time."'");
 			}
 			else if(strtotime($after_after_tomorrow_date)==strtotime($get_day))
 			{
-				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table where class_begin_time between '".$after_after_tomorrow_begin_time."' and '".$after_after_tomorrow_over_time."'");
+				$st = $conn->query("select class_begin_time,class_name,class_id from class_info_table_cui where class_begin_time between '".$after_after_tomorrow_begin_time."' and '".$after_after_tomorrow_over_time."'");
 			}
 			else
 			{
@@ -86,7 +85,7 @@
 			foreach($rs as $value)
 			{
 				//组成时间：课程编号键值对数组
-				$info[$value[0]]=$value[1]." ".$value[2];
+				$info[$value[0]]=$value[1]." *".$value[2];
 			}
 			//var_dump($info);
 			foreach($info as $key => $value)
@@ -101,5 +100,5 @@
 			//var_dump($userinfo);
 			$userinfo_json = json_encode($userinfo);
 			echo $userinfo_json;
-    } 
+	}
 ?>

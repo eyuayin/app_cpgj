@@ -1,7 +1,7 @@
 <?php
 
 
-define("TOKEN", "testforshare");
+define("TOKEN", "yuanying");
 
 $wechatObj=new wechatCallbackapiTest();
 if(!isset($_GET['echostr']))
@@ -24,9 +24,19 @@ class wechatCallbackapiTest
     public
         function __construct()
     {
-        $dsn="mysql:host=" . SAE_MYSQL_HOST_M . ";port=" . SAE_MYSQL_PORT . ";dbname=" . SAE_MYSQL_DB;
-        $this->myDBCon=new PDO($dsn, SAE_MYSQL_USER, SAE_MYSQL_PASS);
-        $this->tableName="memberInfo";
+            $dbms='mysql';
+            $dbName='app_cpgj';
+            $user='develop';
+            $pwd='YuanYing123';
+            $host='ahgxofgavglu.rds.sae.sina.com.cn';
+            $dsn="$dbms:host=$host;port=10276;dbname=$dbName";
+            //$pdo=new PDO($dsn,$user,$pwd);
+                //echo "PDO is sucess";
+            
+            
+            //$dsn="mysql:host=" . SAE_MYSQL_HOST_M . ";port=" . SAE_MYSQL_PORT . ";dbname=" . SAE_MYSQL_DB;
+            $this->myDBCon=new PDO($dsn, $user, $pwd);
+            $this->tableName="memberInfo";
     }
 
     public
@@ -103,8 +113,8 @@ class wechatCallbackapiTest
             case "subscribe":
                 $content[]=array("Title"=>"欢迎关注天环瑜伽",
                     "Description"=>"请点击图片完善您的基本信息",
-                    "PicUrl"=>"http://1.vipmanage.sinaapp.com/2531170_101520510559_2.jpg",
-                    "Url"=>"http://1.vipmanage.sinaapp.com/register.php?openid=" . $object->FromUserName);
+                    "PicUrl"=>"http://1.tianhuanyujia.applinzi.com/2531170_101520510559_2.jpg",
+                    "Url"=>"http://1.tianhuanyujia.applinzi.com/register.php?openid=" . $object->FromUserName);
                 break;
             case "unsubscribe":
                 $content="取消关注";
@@ -136,8 +146,8 @@ class wechatCallbackapiTest
 
                         $content[]=array("Title"=>"欢迎访问天环瑜伽预约课程系统",
                             "Description"=>"点击图片开始预约",
-                            "PicUrl"=>"http://1.vipmanage.sinaapp.com/f11f3a292df5e0fef8858be75c6034a85fdf72b2.jpg",
-                            "Url"=>"http://1.vipmanage.sinaapp.com/order.php?openid=" . $openid);
+                            "PicUrl"=>"http://1.tianhuanyujia.applinzi.com/f11f3a292df5e0fef8858be75c6034a85fdf72b2.jpg",
+                            "Url"=>"http://1.tianhuanyujia.applinzi.com/order.php?openid=" . $openid);
                         break;
                     case "find":
                         $query="select name from user where wechat_id =:wechat_id";
@@ -156,8 +166,8 @@ class wechatCallbackapiTest
 
                         $content[]=array("Title"=>"欢迎访问天环瑜伽预约课程系统",
                         "Description"=>"点击图片查询您已预约的课程信息",
-                        "PicUrl"=>"http://1.vipmanage.sinaapp.com/query.jpg",
-                        "Url"=>"http://1.vipmanage.sinaapp.com/member_selected_classes_weixin.php?openid=" . $openid);
+                        "PicUrl"=>"http://1.tianhuanyujia.applinzi.com/query.jpg",
+                        "Url"=>"http://1.tianhuanyujia.applinzi.com/member_selected_classes_weixin.php?openid=" . $openid);
                         break;
 
                     default:
@@ -221,13 +231,11 @@ class wechatCallbackapiTest
         $result=sprintf($newsTpl, $object->FromUserName, $object->ToUserName, time(), count($arr_item));
         return $result;
     }
-
+    
     private
         function logger($log_content)
     {
         
     }
-
 }
-
 ?>

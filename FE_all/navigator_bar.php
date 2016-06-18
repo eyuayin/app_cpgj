@@ -22,6 +22,8 @@ print <<<EOT
           </div>
           <div class="nav-collapse">
             <ul class="nav">
+            <li class="dropdown"><a href="index.php" class="dropdown-toggle" >首页</a>
+			  </li>
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">会员信息 <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="new-user.php">新增会员</a></li>

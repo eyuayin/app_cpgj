@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['valid_user'])){
+if (isset($_SESSION['valid_user'])){
 print <<<EOT
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +14,13 @@ print <<<EOT
     <link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/site.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
+     <link rel="stylesheet" href="css/jquery-ui.min.css">
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+     
     <![endif]-->
+    
+    
   </head>
   <body>
 EOT;
@@ -63,7 +67,7 @@ print <<<EOT
                      <div class="control-group">
                         <label class="control-label" for="location">预约教室</label>
                         <div class="controls">
-                            <td><select style="line-height:35px;" id="classroom" name="classroom" class="dropdown-select"><option value="1">一楼大教室</option><option value="2">二楼大教室</option><option value="3">一楼VIP</option><option value="4">二楼VIP-1</option><option value="5">二楼VIP-2</option><option value="6">二楼VIP-3</option></select></td>
+                             <td><select style="line-height:35px;" id="classroom" name="classroom" class="dropdown-select"><option value="1">一楼大教室</option><option value="2">二楼大教室</option><option value="3">一楼VIP</option><option value="4">二楼VIP-1</option><option value="5">二楼VIP-2</option><option value="6">二楼VIP-3</option></select></td>
                         </div>
                     </div>
                     <div class="control-group">
@@ -104,7 +108,44 @@ print <<<EOT
     </div>
 
     <script src="js/jquery.js"></script>
+     <script src="js/jquery.min.js"></script>   
+    <script src="js/jquery-ui.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+    <script> 
+          $(function() 
+          {
+               //关闭异步
+                $.ajaxSetup (
+                {
+                    async: false
+                });
+              
+                var availableTags = new Array();//定义一个函数内的数组，用于存放姓名
+                
+                //请求后台数据
+                $.post("queryMemberNameBankend.php",
+                function(data,status)
+                {
+                      console.log("data is:",data);
+                      data = JSON.parse(data);
+                        //将数组对象转换成数组
+                        var i = 0; 
+                        for(i=0;i<data.length;i++)
+                        {
+                          
+                          availableTags.push(data[i]);
+                        }      
+                });       
+                 
+                //console.log("availableTags outside is:",availableTags);
+                $( "#name" ).autocomplete(
+                    {
+                      source: availableTags
+                    });
+          });
+  
+  
+  </script>
     <script src="js/new-role.js"></script>
     <script type="text/javascript" src="../main.js"></script>
   </body>

@@ -1,7 +1,7 @@
 <?php
        
-        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
-        //$openid = $_GET["openid"];          
+       // $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
+        $openid = $_GET["openid"];          
      
      print <<<EOT
 <html>
@@ -136,7 +136,7 @@ EOT;
             echo " <td class='td-right-valid1'>";
             echo "<span>";
             echo "<img src='wx_image/head.jpg' style='height: 50%;'>";
-            echo "</br>剩余席位：{$value[10]}";
+            echo "</br>剩余：{$value[10]}";
             echo "</span>";
             echo "</td>";        
             echo "<td class='td-right-valid2'>";

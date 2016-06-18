@@ -26,7 +26,7 @@ print <<<EOT
     <div class="container-fluid">
       <div class="row-fluid">
        
-        <div class="span9">
+        <div >
 		  <div class="row-fluid">
 			<div class="page-header">
 				    <h1>Users <small>会员信息列表</small></h1>
@@ -215,9 +215,11 @@ else{
 		//获取class为caname的元素 
 		$(".removeButton").click(function() { 
 		var td = $(this); 
-		var txt = td.text(); 
-		var input = $("<input type='text' />"); 
+        var txt = td.text(); 
+        console.log("txt is",txt);
+		var input = $("<input type='text' class='add_value'/>");        
 		td.html(input); 
+        $(".add_value").val(txt);
 		input.click(function() { return false; }); 
 		//获取焦点 
 		input.trigger("focus"); 
@@ -234,7 +236,7 @@ else{
 				member_id:memberID
             },
 			function(data,status){
-				alert(data);
+				//alert(data);
 			});
 		});
 		});

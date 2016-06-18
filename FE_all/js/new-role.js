@@ -107,7 +107,7 @@ function tgSumbit(){
        // console.log("--------->in");
          var select_day =$("#select_day").val();
 
-        $.post("../search_db_class_info_cui.php",
+        $.post("../search_db_class_info.php",
             {
                 day: select_day
             },
@@ -203,7 +203,7 @@ function tgSumbit(){
         var select_day =$("#select_day").val();
         //console.log("select_day",select_day);
         //给服务器发请求并处理json文件
-        $.post("../search_db_class_info_cui.php",
+        $.post("../search_db_class_info.php",
             {
                 day: select_day
             },

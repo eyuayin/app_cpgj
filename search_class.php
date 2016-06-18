@@ -41,7 +41,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#"> 天环瑜伽会员管理系统 </a>
+          <a class="brand" href="#"> 君子兰馆会员管理系统 </a>
           <div class="btn-group pull-right">
 			<a class="btn" href="my-profile.html"><i class="icon-user"></i> Admin</a>
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -55,35 +55,58 @@
           </div>
           <div class="nav-collapse">
             <ul class="nav">
-			<li><a href="/FE_all/index.php">首页</a></li>
+            <li class="dropdown"><a href="FE_all/index.php" class="dropdown-toggle" >首页</a>
+			  </li>
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">会员信息 <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="/FE_all/new-user.php">新增会员</a></li>
+					<li><a href="FE_all/new-user.php">新增会员</a></li>
 					<li class="divider"></li>
-					<li><a href="/FE_all/users.php">查看所有会员</a></li>
+					<li><a href="FE_all/users.php">查看所有会员</a></li>
                     <li class="divider"></li>
-                    <li><a href="/FE_all/search_and_update_user.php">查找会员</a></li>
+                    <li><a href="FE_all/search_and_update_user.php">查找会员</a></li>
                     <li class="divider"></li>
-                    <li><a href="/FE_all/delete-user.php">删除会员</a></li>
+                    <li><a href="FE_all/delete-user.php">删除会员</a></li>
 				</ul>
 			  </li>
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">预约管理 <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="/FE_all/new-role.php">预约课程</a></li>
+					<li><a href="FE_all/new-role.php">预约课程</a></li>
 					<li class="divider"></li>
-					<li><a href="/FE_all/query_booked_class.php">预约查询</a></li>
+					<li><a href="FE_all/query_booked_class.php">预约查询</a></li>
 				</ul>
 			  </li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">课程管理 <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/FE_all/new-class.php">新建课程</a></li>
+                        <li><a href="FE_all/new-class.php">新建课程</a></li>
                         <li class="divider"></li>
-                        <li><a href="/FE_all/search_and_update_class.php">课程查询</a></li>
+                        <li><a href="FE_all/search_and_update_class.php">课程查询</a></li>
                         <li class="divider"></li>
-                        <li><a href="/FE_all/all_class_info.php">所有课程列表</a></li>
-                        <li class="divider"></li>
-                        <li><a href="/FE_all/test1.php/upload_test.html">导入本月课程</a></li>
-                 </ul>
+                        <li><a href="FE_all/all_class_info.php">所有课程列表</a></li>
+                         <li class="divider"></li>
+                        <li><a href="FE_all/upload_class.php" target="_blank">导入本月课程</a></li>
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="upload_class.php" target="_blank">导入本月课程</a></li>-->
+                    </ul>
+                </li>
+				 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">精品课管理 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">                        
+                        <li><a href="FE_all/booking_class_min_new.php">精品课新建及预约</a></li>
+                       
+                    </ul>
+                </li>
+				 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">私教管理 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="FE_all/booking_class_private_new.php">私教预约</a></li>
+                    </ul>
+                </li>
+                
+                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">选择会馆<b class="caret"></b></a>
+                    <ul class="dropdown-menu">                       
+                        <li><a href="FE_all_cui/index.php">翠屏国际会馆</a></li>
+                         <li class="divider"></li>
+                        <li><a href="FE_all/index.php">君子兰会馆</a></li>
+                       
+                    </ul>
                 </li>
                 </ul>
 
@@ -91,7 +114,8 @@
         </div>
       </div>
     </div>
-
+         
+         
 <div class="container-fluid">
 <div class="row-fluid">
 <div class="span9">
@@ -307,7 +331,7 @@ unset($conn);
     { 
        window.location.reload(); 
     } 
-    setTimeout('myrefresh()', 1000); //指定1秒刷新一次 
+    setTimeout('myrefresh()',300000 ); //指定5分钟刷新一次 
 
     $(".modify_class_info").click(function(){
         document.getElementById('light').style.display='block';
