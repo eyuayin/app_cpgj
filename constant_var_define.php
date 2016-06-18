@@ -253,11 +253,11 @@
     function db_connect()
     {
         //连接数据库的参数
-        $host="ahgxofgavglu.rds.sae.sina.com.cn";  
-        $port=10276;
+        $host="localhost";  
+        $port=3306;
         $dbname="app_cpgj";
-        $dbuser="develop";
-        $dbpassw="YuanYing123";
+        $dbuser="root";
+        $dbpassw="";
         $dsn = "mysql:host=".$host.";port=".$port.";dbname=".$dbname;
         //连接数据库
         try
