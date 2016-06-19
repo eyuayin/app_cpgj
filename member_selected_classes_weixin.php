@@ -26,10 +26,10 @@ require("./constant_var_define.php");
     
    
     
-    $input_open_id = $_GET['openid'];
+   // $input_open_id = $_GET['openid'];
     
 
-    //$input_open_id = "oqUOZwUXs9YeUF0uMyWr9-M8cH3B";
+    $input_open_id = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
     debug_output("输入的open_id是：".$input_open_id);
     
     if(empty($input_open_id))
