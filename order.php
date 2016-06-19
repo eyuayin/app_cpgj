@@ -1,7 +1,7 @@
 <?php
        
-       // $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
-        $openid = $_GET["openid"];          
+        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
+       // $openid = $_GET["openid"];          
      
      print <<<EOT
 <html>
@@ -76,83 +76,107 @@ EOT;
         //是君子兰会员
         if($rs_jzl)
         {
-            $st = $conn->query("select * from class_detail_in_7_days where location=2 ORDER BY date ASC");
-            //获得结果集，结果集就是一个二维数组
-            $rs = $st->fetchAll();
-            //var_dump($rs);
+           $location = 2;
         }
         
         //非君子兰会员
         else 
         {
-            $st = $conn->query("select * from class_detail_in_7_days where location=1 ORDER BY date ASC");
-            //获得结果集，结果集就是一个二维数组
-            $rs = $st->fetchAll();
-            //svar_dump($rs);
+           $location =1;   
         }
         
+        $st = $conn->query("select date,weekday from class_detail_in_7_days where location='".$location."' ORDER BY date ASC");
+          //获得结果集，结果集就是一个二维数组
+        $vl = $st->fetchAll();
         
-        //显示所有记录
-        foreach ($rs as $value) {
-            echo "<div style='height:10px;'></div>";
-            
-            switch ($value[4])
+        //新建数组，存入所有数据库读出的日期列表
+        $vl_all = array();
+            for($i=1;$i<count($vl,COUNT_NORMAL);$i++) 
+            {
+                $vl_all[] = $vl[$i][0]."*".$vl[$i][1];
+            }
+        //去除重复的日期
+        $vl_unique = array_unique($vl_all);
+        var_dump($vl_unique);
+      //  echo "count is:";
+       // echo count($vl_unique);
+        //截取 date 部分
+        foreach($vl_unique as $vl_un )
+        { 
+            $date_only = strstr($vl_un, '*', true); 
+            $weekday_only =  substr($vl_un,11); 
+            $qr = $conn->query("select * from class_detail_in_7_days where date = '".$date_only."' ORDER BY date ASC"); 
+            $fa = $qr->fetchAll();  
+           
+                switch ($weekday_only)
+                    {
+                    case 1:
+                      $weekday_only = "星期 日 ";
+                      break;
+                    case 2:
+                      $weekday_only =  " 星期 一 ";
+                      break;
+                    case 3:
+                      $weekday_only =  " 星期 二 ";
+                      break;
+                    case 4:
+                      $weekday_only =  " 星期 三 ";
+                      break;
+                    case 5:
+                      $weekday_only =  " 星期 四 ";
+                      break;
+                    case 6:
+                      $weekday_only =  " 星期 五 ";
+                      break;
+                    case 7:
+                      $weekday_only =  " 星期 六 ";
+                      break;
+                    }
+                echo "<div style='height:10px;'></div>";
+                echo "<div class='div-class-header'> {$weekday_only}/{$date_only}</div>";
+                echo "<table id='day2' cellpadding='6' cellspacing='0' width='100%'>";                                              
+                
+                   
+                 
+                foreach ($fa as $value)
                 {
-                case 1:
-                  $value[4] = "星期 日 ";
-                  break;
-                case 2:
-                  $value[4] =  " 星期 一 ";
-                  break;
-                case 3:
-                  $value[4] =  " 星期 二 ";
-                  break;
-                case 4:
-                  $value[4] =  " 星期 三 ";
-                  break;
-                case 5:
-                  $value[4] =  " 星期 四 ";
-                  break;
-                case 6:
-                  $value[4] =  " 星期 五 ";
-                  break;
-                case 7:
-                  $value[4] =  " 星期 六 ";
-                  break;
-                }
-                            
-            $value[10] = $value[8]-$value[9];  //计算剩余可约次数
-            
-            echo "<div class='div-class-header'> {$value[4]}/{$value[3]}</div>";
-            echo "<table id='day2' cellpadding='6' cellspacing='0' width='100%'>";
-            echo "<tbody>";
-            echo "<volist name='data2' id='vo2'>";
-            echo "<tr style='height: 60px;' onclick='book_class(this);'>";         
-            echo "<td class='td-class-time-valid'>{$value[5]}</td>" ;     
-            echo "<td class='td-class-info-valid'>";
-            echo "<div>{$value[1]}</div>";
-            echo "<div class='inner-small'>{$value[2]}</div>";
-            echo "</td>";          
-            echo " <td class='td-right-valid1'>";
-            echo "<span>";
-            echo "<img src='wx_image/head.jpg' style='height: 50%;'>";
-            echo "</br>剩余：{$value[10]}";
-            echo "</span>";
-            echo "</td>";        
-            echo "<td class='td-right-valid2'>";
-            echo "<img src='wx_image/right-arrow.jpg' style='height: 40%;'>";
-            echo "</td>" ;  
-            echo "<td  style='DISPLAY:none'>{$value[0]}</td>";
-            echo "<td  style='DISPLAY:none'>{$value[7]}</td>";
-            echo "</tr>"  ;       
-            echo " </volist>";       
-            echo "</tbody>";     
-            echo "</table>" ;       
-        }   
+                     $value[10] = $value[8]-$value[9];  //计算剩余可约次数
+                     
+                    echo "<tbody>";
+                    echo "<volist name='data2' id='vo2'>";
+                    echo "<tr style='height: 60px;' onclick='book_class(this);'>";         
+                    echo "<td class='td-class-time-valid'>{$value[5]}</td>" ;     
+                    echo "<td class='td-class-info-valid'>";
+                    echo "<div>{$value[1]}</div>";
+                    echo "<div class='inner-small'>{$value[2]}</div>";
+                    echo "</td>";          
+                    echo " <td class='td-right-valid1'>";
+                    echo "<span>";
+                    echo "<img src='wx_image/head.jpg' style='height: 50%;'>";
+                    echo "</br>剩余：{$value[10]}";
+                    echo "</span>";
+                    echo "</td>";        
+                    echo "<td class='td-right-valid2'>";
+                    echo "<img src='wx_image/right-arrow.jpg' style='height: 40%;'>";
+                    echo "</td>" ;  
+                    echo "<td  style='DISPLAY:none'>{$value[0]}</td>";
+                    echo "<td  style='DISPLAY:none'>{$value[7]}</td>";
+                    echo "</tr>"  ;       
+                    echo " </volist>";       
+                    echo "</tbody>";     
+                           
+                    
+                }   
+               
+                echo "</table>" ;    
+        }
         
-
-
-    
+        //查询日期对应的
+       
+ 
+        //获得结果集，结果集就是一个二维数组
+                                
+              
         echo " </div>";
         echo " <div role='tabpanel' class='tab-pane' id='min'>精品课微预约功能敬请期待！</div>";
         echo " <div role='tabpanel' class='tab-pane' id='private'>私教课微预约功能敬请期待！</div>";
