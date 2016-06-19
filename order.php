@@ -1,7 +1,7 @@
 <?php
        
-        $openid = "oqUOZwUXs9YeUF0uMyWr9-M8cH3U";
-       // $openid = $_GET["openid"];          
+        $openid = "oqUOZwUpcXNvNKfqrnAEMvzKKfff";
+       //$openid = $_GET["openid"];          
      
      print <<<EOT
 <html>
@@ -86,15 +86,20 @@ EOT;
         }
         
         $st = $conn->query("select date,weekday from class_detail_in_7_days where location='".$location."' ORDER BY date ASC");
+        //debug_output("select date,weekday from class_detail_in_7_days where location='".$location."' ORDER BY date ASC");
           //获得结果集，结果集就是一个二维数组
         $vl = $st->fetchAll();
-        
+       // echo "vl is ";
+       //  var_dump($vl);
         //新建数组，存入所有数据库读出的日期列表
         $vl_all = array();
-            for($i=1;$i<count($vl,COUNT_NORMAL);$i++) 
+            for($i=0;$i<count($vl,COUNT_NORMAL);$i++) 
             {
+                
                 $vl_all[] = $vl[$i][0]."*".$vl[$i][1];
             }
+        //  echo "vl_all is ";
+         // var_dump($vl_all);
         //去除重复的日期
         $vl_unique = array_unique($vl_all);
         var_dump($vl_unique);
@@ -105,7 +110,7 @@ EOT;
         { 
             $date_only = strstr($vl_un, '*', true); 
             $weekday_only =  substr($vl_un,11); 
-            $qr = $conn->query("select * from class_detail_in_7_days where date = '".$date_only."' ORDER BY date ASC"); 
+            $qr = $conn->query("select * from class_detail_in_7_days where date = '".$date_only."' and location = '".$location."' ORDER BY date ASC"); 
             $fa = $qr->fetchAll();  
            
                 switch ($weekday_only)
@@ -153,7 +158,7 @@ EOT;
                     echo " <td class='td-right-valid1'>";
                     echo "<span>";
                     echo "<img src='wx_image/head.jpg' style='height: 50%;'>";
-                    echo "</br>剩余：{$value[10]}";
+                    echo "</br>{$value[10]}/20";
                     echo "</span>";
                     echo "</td>";        
                     echo "<td class='td-right-valid2'>";
