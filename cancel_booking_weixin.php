@@ -3,13 +3,13 @@
 <?php
     require("./constant_var_define.php");
 
-    $input_card_id = $_GET['card_id'];
+    $input_card_id = $_POST['card_id'];
     debug_output("输入的卡号是：".$input_card_id);
-    $input_class_id = $_GET['class_id'];
+    $input_class_id = $_POST['class_id'];
     debug_output("输入的class_id是：".$input_class_id);
-    $input_class_begin_time = $_GET['begin_time'];
+    $input_class_begin_time = $_POST['begin_time'];
     debug_output("输入的上课时间是：".$input_class_begin_time);
-    $open_id = $_GET['open_id'];
+    $open_id = $_POST['open_id'];
     debug_output("输入的open_id是：".$open_id);
 
     
