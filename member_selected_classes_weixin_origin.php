@@ -106,7 +106,8 @@ print <<<EOT
                           <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
                           <td style='DISPLAY:none' class="class_id">{$class_booking_value[0]}</td>  
                           <td style='DISPLAY:none' class="card_id">{$value[1]}</td>  
-                          <td style='DISPLAY:none' class=open_id>{$input_open_id}</td>
+                          <td style='DISPLAY:none' class="open_id">{$input_open_id}</td>
+                          <td style='DISPLAY:none' class="class_begin_date_time">{$class_info_value[2]}</td>
                           <td></td>
                         </tr>
                       </volist>

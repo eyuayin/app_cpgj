@@ -5,6 +5,7 @@
 *****************************************************************************************************/
     define("CANCEL_TIME_LIMIT", "2");               //取消约课时间限制
     define("CANCEL_TIMES_PER_MONTH", "1");          //每月取消次数限制
+    date_default_timezone_set('PRC');               //设置时区
     define("TODAY_DATE", date("Y-m-d",time()));     //当前日期，格式：2015-12-31
     define("NOW_TIME", date("Y-m-d H:i:s",time())); //现在时间，格式：2015-12-31 13:59:59
     define("TIME_CARD_TYPE", "1");                  //计时卡
