@@ -102,7 +102,7 @@ EOT;
          // var_dump($vl_all);
         //去除重复的日期
         $vl_unique = array_unique($vl_all);
-        var_dump($vl_unique);
+        //var_dump($vl_unique);
       //  echo "count is:";
        // echo count($vl_unique);
         //截取 date 部分
@@ -158,7 +158,7 @@ EOT;
                     echo " <td class='td-right-valid1'>";
                     echo "<span>";
                     echo "<img src='wx_image/head.jpg' style='height: 50%;'>";
-                    echo "</br>{$value[10]}/20";
+                    echo "</br>余{$value[10]}";
                     echo "</span>";
                     echo "</td>";        
                     echo "<td class='td-right-valid2'>";

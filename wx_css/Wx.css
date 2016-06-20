@@ -39,6 +39,7 @@
     text-align: center;
     color: #555555;
     font-weight: bold;
+    font-size:small;
 }
 
 .td-class-info-invalid{
@@ -70,7 +71,7 @@
 
 .td-class-info-valid{
     width: 60%;
-    font-size: 18px;
+    font-size: 14px;
     background-color: #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
     color: #555555;

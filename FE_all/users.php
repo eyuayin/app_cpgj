@@ -134,9 +134,9 @@ else{
                 echo "  <td>{$result[0][5]}</td>";  //valid_end_date
                 echo "  <td>{$result[0][6]}</td>";  //pause_begin_data
                 echo "  <td>{$result[0][6]}</td>";  //pause_end_date
-				echo "  <td>";
-				echo "    <b class='removeButton'>{$value[10]}</b>";
-				echo "  </td>";  
+				echo "  <td class='removeButton'>{$value[10]}</td>";
+				//echo "    <b class='removeButton'>{$value[10]}</b>";
+				//echo "  </td>";  
                 echo "</tr>";
                 echo "</tbody>";
             } else if ($value[9] == MEASURED_CARD_TYPE) //计次卡
@@ -160,9 +160,9 @@ else{
                 echo "  <td>{$result[0][3]}</td>";  //valid_end_date
                 echo "  <td>{$result[0][4]}</td>";  //pause_begin_data
                 echo "  <td>{$result[0][5]}</td>";  //pause_end_date
-				echo "  <td >";
-				echo "<b class='removeButton'>{$value[10]}</b>";
-				echo "</td>"; 
+				echo "  <td class='removeButton'>{$value[10]}</td>";
+				//echo "<b class='removeButton'>{$value[10]}</b>";
+				//echo "</td>"; 
                 echo "</tr>";
                 echo "</tbody>";
             }

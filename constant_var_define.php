@@ -290,6 +290,7 @@
         echo "</font>";
     }
     
+     //获得星期
       function   get_week($date){
         //强制转换日期格式
         $date_str=date('Y-m-d',strtotime($date));
