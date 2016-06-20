@@ -1,34 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta http-equiv="Cache-Control" content="no-cache" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="FE_all/css/bootstrap.css" rel="stylesheet"></link>
-        <link href="FE_all/css/site.css" rel="stylesheet"></link>
-        <link href="FE_all/css/bootstrap-responsive.css" rel="stylesheet"></link>
-        <script src="FE_all/js/jquery.js"></script>
-    </head>
-    <body style="width:1800px;height:1994px;margin-top:0px;transform:rotate(0deg);-ms-transform:rotate(0deg);-moz-transform:rotate(0deg);-webkit-transform:rotate(0deg);">
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link href="wx_css/style.css" rel="stylesheet" type="text/css" />
+<link href="wx_css/Wx.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="FE_all_cui/js/jquery.min.js"></script> 
+<script src="JS_weixin/cancel_book.js" charset='gbk'></script>
 
-        
-           
-               
-                   
-                        <div class="page-header">
-                            <h1>Selected class <small>已约课程列表</small></h1>
-                        </div>
-                        <table style="font-size: 45px;width:2500px">
-                            <thead>
-                                <tr style="height:300px;">
-                                    <!--<th>会员号</th> -->
-                                    <th style="border:1px solid #BAB3B3;">姓名</th>
-                                    <th style="border:1px solid #BAB3B3;">卡号</th>
-                                    <th style="border:1px solid #BAB3B3;">课程名</th>
-                                    <th style="border:1px solid #BAB3B3;">时间</th>
-                                    <th style="border:1px solid #BAB3B3;">取消</th>
-                                    <th style="border:1px solid #BAB3B3;">id</th>
-                                </tr>
-                            </thead>
+<title>已约课程</title>
+</head>
+<body style="margin:0">
+  <!-- Table markup-->  
+  <div class="div-title" style="line-height:40px;">我的课程</div>
+
+
 <?php
     require("./constant_var_define.php");
 
@@ -49,17 +38,20 @@
     
     //根据open_id查出card_id,member_id和member_name
     $query_result = $conn->query("select member_id,card_id,member_name from member_info_table where open_id='".$input_open_id."' UNION select member_id,card_id,member_name from member_info_table_cui where open_id='".$input_open_id."'");
+    debug_output("select member_id,card_id,member_name from member_info_table where open_id='".$input_open_id."' UNION select member_id,card_id,member_name from member_info_table_cui where open_id='".$input_open_id."'");
     $result = $query_result->fetchAll();
+    var_dump($result);
     if(empty($result))
     {
         page_output("#ffffff", 15, "此微信号尚未绑定，无法查询！");
-        //echo "此微信号尚未绑定，无法查询！";
+        echo "此微信号尚未绑定，无法查询！";
         return;
     }
     
     //循环将所有输入的会员名字的课程列出来
     foreach($result as $value)  //member_info_table 0:member_id 1:card_id 2:member_name
     {
+        echo "in foreach";
         //根据查出的member_id到class_booking_table中查出此用户已选的课程
         $query = $conn->query("select * from class_booking_table where member_id=$value[0] UNION select * from class_booking_table_cui where member_id=$value[0] order by class_id");
         debug_output("select * from class_booking_table where member_id=$value[0] UNION select * from class_booking_table_cui where member_id=$value[0] order by class_id");
@@ -81,31 +73,44 @@
                 //if(date('Y-m-d', strtotime($class_info_value[2])) >= NOW_TIME)    //列出当前时间之后的所有已约课程
                 if($class_info_value[2] >= NOW_TIME)
                 {
+                 switch($class_booking_value[4])
+                 {
+                     case 0:
+                      $class_booking_value[4] = "已预约";
+                      break;
+                     case 1:
+                      $class_booking_value[4] = "已取消";
+                      break;
+                    
+                 }
+                 
+                $date_only = strstr($class_info_value[2]," ",true); //获取课程开始日期
+                debug_output("booked date is；".$date_only);
+                $time_only = strstr($class_info_value[2]," "); //获取课程开始时间
+                debug_output("booked time is；".$time_only);
+              
+                $weekday = get_week($date_only); //获取课程开始星期
+                debug_output("weekday is；".$weekday);
 print <<<EOT
+                
+                 <div class="div-class-header"> {$weekday}/{$date_only} </div>
+                  <table id="day1" cellpadding="6" cellspacing="0" width="100%">  
                     <tbody>
-                    <tr class="$class_booking_value[4]" style="height:300px;">
-                    <td style="border:1px solid #BAB3B3;">{$value[2]}</td>
-                    <td style="border:1px solid #BAB3B3;">{$value[1]}</td>
-                    <td style="border:1px solid #BAB3B3;">{$class_info_value[1]}</td>
-                    <td style="border:1px solid #BAB3B3;">{$class_info_value[2]}</td>
-                    <td style="border:1px solid #BAB3B3;">
-                    <a href="cancel_booking_weixin.php?open_id=$input_open_id&card_id=$value[1]&begin_time=$class_info_value[2]&class_id=$class_booking_value[0]">取消</a>
-                    </td>
-                    <td style="border:1px solid #BAB3B3;">$class_booking_value[0]</td>
-                    </tr>
-                     <script>
-                        $(document).ready(function () {
-                            console.log("dffr");
-                            if($class_booking_value[4] == 1){
-                                
-                                $(".1 a").attr('href','#'); 
-                                $(".1 a").removeAttr("onclick");
-                                $(".1 a").text('已取消');
-                                $(".1 td").css({'background-color':'#B3B3B3'});
-                            }
-
-                        });
-                    </script>
+                      <volist name="data1" id="vo1">
+                        <tr style="height: 60px;" onclick="cancel_class(this);" id="class_id">
+                          <td class="class-status"><input value="{$class_booking_value[0]}"></td>
+                          <td class="hide-input"><input value="canceled"></td>
+                          <td class="td-class-time-valid">{$time_only}</td>  
+                          <td class="td-class-info-valid"><div>{$class_info_value[1]}</div><div class="inner-small">{$class_info_value[6]}</div></td>
+                          <td class="td-right-valid1"><span>{$class_booking_value[4]}</span></td>
+                          <td class="td-right-valid2"><img src="wx_image/right-arrow.jpg" style="height: 40%;"></td>
+                          <td style='DISPLAY:none' ></td>
+                          <td style='DISPLAY:none' class=open_id></td>
+                          <td></td>
+                        </tr>
+                      </volist>
+                    </tbody>
+                  </table>                   
 EOT;
 
                }
