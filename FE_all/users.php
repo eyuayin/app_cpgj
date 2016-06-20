@@ -90,7 +90,7 @@ else{
         $rs = $st->fetchAll();
 
         $totalRow = $rs[0][0];  //总记录数
-        debug_output("totalRow=".$totalRow);
+        //debug_output("totalRow=".$totalRow);
         $totalPage = ceil($totalRow / $pageSize); //总页数
 
         if ($currentPage >= $totalPage) {
@@ -108,7 +108,7 @@ else{
         $st = $conn->query("select * from member_info_table limit {$start},$pageSize");
         //获得结果集，结果集就是一个二维数组
         $rs = $st->fetchAll();
-        var_dump($rs);
+        //var_dump($rs);
 
         //显示所有记录
         foreach ($rs as $value) {
@@ -226,7 +226,7 @@ else{
 		//文本框失去焦点后提交内容，重新变为文本 
 		input.blur(function() { 
 		var newtxt = $(this).val(); 
-        var memberID = $(this).parent().parent().parent().children("td:eq(0)").text();
+        var memberID = $(this).parent().parent().children("td:eq(0)").text();
         //console.log("memberID is ",memberID);		
 		td.html(newtxt); 
 			
@@ -236,7 +236,7 @@ else{
 				member_id:memberID
             },
 			function(data,status){
-				//alert(data);
+				alert(data);
 			});
 		});
 		});
@@ -249,7 +249,7 @@ else{
             },
             function(data,status){
                 console.log("in--------",data);
-                alert("data is"+data);
+               // alert("data is"+data);
             });
         }
 			

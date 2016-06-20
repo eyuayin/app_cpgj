@@ -16,7 +16,7 @@
 
     //将备注插入数据库
     $query_result = $conn->query("UPDATE member_info_table SET remarks = '".$remarks."' WHERE member_id = $member_id");
-    //debug_output("UPDATE member_info_table SET remarks = $remarks WHERE member_id = $member_id");
+    debug_output("UPDATE member_info_table SET remarks = $remarks WHERE member_id = $member_id");
     if($conn->errorCode() != '00000')
     {
         echo "数据库错误！\r\n";
