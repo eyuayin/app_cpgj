@@ -110,7 +110,7 @@ EOT;
         { 
             $date_only = strstr($vl_un, '*', true); 
             $weekday_only =  substr($vl_un,11); 
-            $qr = $conn->query("select * from class_detail_in_7_days where date = '".$date_only."' and location = '".$location."' ORDER BY date ASC"); 
+            $qr = $conn->query("select * from class_detail_in_7_days where date = '".$date_only."' and location = '".$location."' ORDER BY begin_time ASC"); 
             $fa = $qr->fetchAll();  
            
                 switch ($weekday_only)

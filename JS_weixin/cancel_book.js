@@ -52,7 +52,10 @@ function cancel_class(v) {
                                 alert("Êý¾Ý£º" + data);
 
                             });
-                            
+                          
+                            window.location.reload();
+                           
+                                                        
                     }   
 
                     else
