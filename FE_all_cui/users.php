@@ -32,10 +32,6 @@ print <<<EOT
 				    <h1>Users <small>会员信息列表</small></h1>
 
 			</div>
-            <div>
-              <button class="btn btn-large btn-success" onClick="getAnnualcard();">查看所有年卡会员</button>
-              <button class="btn btn-large btn-success" style="margin-left: 9px;">查看所有次卡会员</button>
-            </div>
 			<table class="table table-striped table-bordered table-condensed">
 				<thead>
 					<tr>
@@ -105,7 +101,7 @@ else{
         }
 
         //执行select查询语句，返回数据库操纵对象statement
-        $st = $conn->query("select * from member_info_table_cui limit {$start},$pageSize");
+        $st = $conn->query("select * from member_info_table_cui order by card_id limit {$start},$pageSize");
         //获得结果集，结果集就是一个二维数组
         $rs = $st->fetchAll();
         //var_dump($rs);
