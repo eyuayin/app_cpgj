@@ -87,21 +87,48 @@ print <<<EOT
 EOT;
         }
     }
-    /*
-    else if($search_type == 1)  //已到期卡信息查询
+
+    else if($search_type == 2)  //即将到期卡信息查询
     {
-        $query_result = $conn->query("select * from member_info_table_cui where phone='".$key_word."'");
-        debug_output("select * from member_info_table_cui where phone='".$key_word."'");
+       if($card_type == 0)
+        {
+        $query_result = $conn->query("select * from member_card_sum_view_cui where end_date > '".$begin_time."' AND end_date < '".$end_time."'");
+        debug_output("select * from member_card_sum_view_cui where end_date > '".$begin_time."' AND end_date < '".$end_time."'");
+        }
+        else if ($card_type != 0)
+        {
+         $query_result = $conn->query("select * from member_card_sum_view_cui where end_date > '".$begin_time."' AND end_date < '".$end_time."' and card_type = $card_type ");
+        debug_output("select * from member_card_sum_view_cui where end_date > '".$begin_time."' AND end_date < '".$end_time."' and card_type = $card_type");   
+        }
         if(!$query_result)
         {
-            debug_output("1.数据库错误！");
+            debug_output("0.数据库错误！");
             echo "数据库错误！";
             return;
         }
-        $value = $query_result->fetch();
-
-        list_member_info($value, $conn);
+        $value = $query_result->fetchAll();
+        foreach($value as $value){
+           
+print <<<EOT
+           
+       
+            <tr>
+            <td>{$card_tyep_num_to_name[$value[0]]}</td>
+          
+            <td>{$value[1]}</td>
+           
+            <td>{$value[2]}</td>
+           
+            <td>{$value[3]}</td>
+            <td>{$class_priority_num_to_name[$value[4]]}</td>
+            <td>{$card_status_num_to_name[$value[5]]}</td>
+            <td>{$value[6]}</td>
+            <td>{$value[7]}</td>                   
+            </tr>        
+EOT;
+        }
     }
+    /*
     else if($search_type == 2)  //即将到期卡信息查询
     {
         $query_result = $conn->query("select * from member_info_table_cui where card_id='".$key_word."'");
