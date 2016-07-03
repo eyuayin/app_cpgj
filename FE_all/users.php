@@ -105,7 +105,7 @@ else{
         }
 
         //执行select查询语句，返回数据库操纵对象statement
-        $st = $conn->query("select * from member_info_table limit {$start},$pageSize");
+        $st = $conn->query("select * from member_info_table order by card_id limit {$start},$pageSize");
         //获得结果集，结果集就是一个二维数组
         $rs = $st->fetchAll();
         //var_dump($rs);
