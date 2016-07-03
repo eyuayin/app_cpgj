@@ -32,6 +32,8 @@ print <<<EOT
                     <li class="divider"></li>
                     <li><a href="search_and_update_user.php">查找会员</a></li>
                     <li class="divider"></li>
+                    <li><a href="search_card_by_time.php">分类查找卡信息</a></li>
+                    <li class="divider"></li>
                     <li><a href="delete-user.php">删除会员</a></li>
 				</ul>
 			  </li>
