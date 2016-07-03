@@ -4,7 +4,7 @@
 <link href="/FE_all/css/bootstrap.css" rel="stylesheet"/>
 <link href="/FE_all/css/site.css" rel="stylesheet"/>
 <link href="/FE_all/css/bootstrap-responsive.css" rel="stylesheet"/>
-<script src="FE_all/js/jquery.js"></script>
+<script src="js/jquery.js"></script>
 </head>
 <style type="text/css">
     .white_content{
@@ -31,7 +31,8 @@
                         <th>常温卡/高温卡</th>
                         <th>会员卡状态</th>
                         <th>会员卡开卡日期</th>
-                        <th>会员卡失效日期</th>                                                                  
+                        <th>会员卡失效日期</th>
+                        <th class="checkall">出勤频率</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,8 +70,9 @@
         foreach($value as $value){
            
 print <<<EOT
-           
-       
+            <script>
+            $(".checkall").css("display", "none");
+            </script>
             <tr>
             <td>{$card_tyep_num_to_name[$value[0]]}</td>
           
@@ -111,7 +113,9 @@ EOT;
            
 print <<<EOT
            
-       
+            <script>
+            $(".checkall").css("display", "none");
+            </script>
             <tr>
             <td>{$card_tyep_num_to_name[$value[0]]}</td>
           
@@ -131,6 +135,7 @@ EOT;
     
     else if($search_type == 1)  //已到期卡信息查询
     {
+        
         if($card_type == 0)
         {
         $query_result = $conn->query("select * from member_card_sum_view_cui where end_date < '".$begin_time."'");
@@ -140,6 +145,50 @@ EOT;
         {
          $query_result = $conn->query("select * from member_card_sum_view_cui where end_date < '".$begin_time."' and card_type = $card_type ");
         debug_output("select * from member_card_sum_view_cui where end_date < '".$begin_time."' and card_type = $card_type");   
+        }
+        if(!$query_result)
+        {
+            debug_output("0.数据库错误！");
+            echo "数据库错误！";
+            return;
+        }
+        $value = $query_result->fetchAll();
+        foreach($value as $value){
+           
+print <<<EOT
+           
+            <script>
+            $(".checkall").css("display", "none");
+            </script>
+            
+            <tr>
+            <td>{$card_tyep_num_to_name[$value[0]]}</td>
+          
+            <td>{$value[1]}</td>
+           
+            <td>{$value[2]}</td>
+           
+            <td>{$value[3]}</td>
+            <td>{$class_priority_num_to_name[$value[4]]}</td>
+            <td>{$card_status_num_to_name[$value[5]]}</td>
+            <td>{$value[6]}</td>
+            <td>{$value[7]}</td>                   
+            </tr>        
+EOT;
+    }
+}
+    
+    else if($search_type == 3)
+    {
+        if($card_type == 0)
+        {
+        $query_result = $conn->query("SELECT card_type,card_id,name,phone,card_priority,card_status,begin_date,end_date,count(*) as booked_num from member_visit_last_view_cui where class_begin_time > '".$begin_time."' and class_begin_time < '".$end_time."' group by member_id order by booked_num DESC");
+        debug_output("SELECT card_type,card_id,name,phone,card_priority,card_status,begin_date,end_date,count(*) as booked_num from member_visit_last_view_cui where class_begin_time > '".$begin_time."' and class_begin_time < '".$end_time."' group by member_id order by booked_num DESC");
+        }
+        else if ($card_type != 0)
+        {
+         $query_result = $conn->query("SELECT card_type,card_id,name,phone,card_priority,card_status,begin_date,end_date,count(*) as booked_num from member_visit_last_view_cui where class_begin_time > '".$begin_time."' and class_begin_time < '".$end_time."' and card_type=$card_type group by member_id order by booked_num DESC");
+         debug_output("SELECT card_type,card_id,name,phone,card_priority,card_status,begin_date,end_date,count(*) as booked_num from member_visit_last_view_cui where class_begin_time > '".$begin_time."' and class_begin_time < '".$end_time."' and card_type=$card_type group by member_id order by booked_num DESC");   
         }
         if(!$query_result)
         {
@@ -164,18 +213,13 @@ print <<<EOT
             <td>{$class_priority_num_to_name[$value[4]]}</td>
             <td>{$card_status_num_to_name[$value[5]]}</td>
             <td>{$value[6]}</td>
-            <td>{$value[7]}</td>                   
+            <td>{$value[7]}</td>  
+            <td>{$value[8]}</td>             
             </tr>        
 EOT;
     }
-}
-    /*
-    else
-    {
-        echo "暂不支持此种查询方式！";
-        return;
     }
-*/
+
 ?>
     </tbody>
     </table>

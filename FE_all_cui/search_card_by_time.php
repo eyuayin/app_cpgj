@@ -83,6 +83,7 @@ print <<<EOT
 </div>
 
 <script src="js/bootstrap.min.js"></script>
+<script src="js/search.js"></script>
 
 </body>
 </html>
