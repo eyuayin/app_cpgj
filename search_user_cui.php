@@ -251,6 +251,7 @@ print <<<EOT
                         <th>本周已约课次数</th>
                         <th>每周最多可约课次数</th>
                         <th>修改</th>
+                        <th>解绑</th>
                     </tr>
                 </thead>
 
@@ -273,6 +274,7 @@ print <<<EOT
             <td>{$value_card[2]}</td>
             <td>{$value_card[3]}</td>
             <td class="modify_member_timeCard"><a style="cursor:pointer">修改</a></td>
+            <td class="unbind_member_timeCard"><a href="unbind_openid_cui.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
             </tbody>
 EOT;
@@ -304,6 +306,7 @@ print <<<EOT
                         <th>已用次数</th>
                         <th>总次数</th>
                         <th>修改</th>
+                        <th>解绑</th>
                     </tr>
                 </thead>
 
@@ -326,6 +329,7 @@ print <<<EOT
             <td>{$value_card[8]}</td>
             <td>{$value_card[9]}</td>
             <td  class="modify_member_MeaCard"><a style="cursor:pointer" >修改</a></td>
+            <td class="unbind_member_MeaCard"><a href="unbind_openid_cui.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
             </tbody>
 EOT;
