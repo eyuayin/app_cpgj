@@ -26,33 +26,28 @@ print <<<EOT
     <div class="container-fluid">
       <div class="row-fluid">
        
-        <div >
+        <div>
 		  <div class="row-fluid">
 			<div class="page-header">
 				    <h1>Users <small>会员信息列表</small></h1>
 
 			</div>
-            <div>
-              <button class="btn btn-large btn-success" onClick="getAnnualcard();">查看所有年卡会员</button>
-              <button class="btn btn-large btn-success" style="margin-left: 9px;">查看所有次卡会员</button>
-            </div>
 			<table class="table table-striped table-bordered table-condensed">
 				<thead>
 					<tr>
-						<th style="width:3%">会员编号</th> 
+						<th style="width:3%">会员卡号</th>
 			            <th style="width:4%">姓名</th>
-			            <th style="width:3%">性别</th> 
-			            <th style="width:3%">身份证号</th>
-			            <th style="width:3%">生日</th>
-			            <th style="width:3%">手机号码</th>
-			            <th style="width:3%">会员卡号</th>
-			            <th style="width:8%">微信号码</th>
+			            <th style="width:3%">性别</th> 			           			            			            
+                        <th style="width:3%">手机号码</th>			           
 			            <th style="width:3%">会员卡类型</th>
                         <th style="width:3%">会员卡状态</th>
 			            <th style="width:5%">会员卡开卡日期</th>
 			            <th style="width:5%">会员卡失效日期</th>
 			            <th style="width:3%">会员卡冻结起始日期</th>
 			            <th style="width:3%">会员卡冻结截止日期</th>
+                        <th style="width:8%">微信号码</th>
+                        <th style="width:3%">身份证号</th>
+                        <th style="width:3%">生日</th>
 					    <th style="width: 36%">备注</th>
 
 						
@@ -90,7 +85,7 @@ else{
         $rs = $st->fetchAll();
 
         $totalRow = $rs[0][0];  //总记录数
-        //debug_output("totalRow=".$totalRow);
+        debug_output("totalRow=".$totalRow);
         $totalPage = ceil($totalRow / $pageSize); //总页数
 
         if ($currentPage >= $totalPage) {
@@ -120,22 +115,22 @@ else{
 
                 echo "<tbody>";
                 echo "<tr>";
-				echo "  <td >{$value[0]}</td>";  //member_id
-                echo "  <td>{$value[1]}</td>";  //member_name
-                echo "  <td>{$sex_english_to_chinese[$value[2]]}</td>";  //sex
-                echo "  <td>{$value[3]}</td>";  //identy_card_number
-                echo "  <td>{$value[4]}</td>";  //birthday
-                echo "  <td>{$value[5]}</td>";  //phone
+				//echo "  <td >{$value[0]}</td>";  //member_id
                 echo "  <td>{$value[6]}</td>";  //card_id
-                echo "  <td>{$value[8]}</td>";  //open_id
+                echo "  <td>{$value[1]}</td>";  //member_name
+                echo "  <td>{$sex_english_to_chinese[$value[2]]}</td>";  //sex                              
+                echo "  <td>{$value[5]}</td>";  //phone              
                 echo "<td>{$card_tyep_num_to_name[$result[0][9]]}</td>";    //concrete_card_type
                 echo "<td>{$card_status_num_to_name[$result[0][8]]}</td>";    //card_status
                 echo "  <td>{$result[0][4]}</td>";  //valid_begin_date
                 echo "  <td>{$result[0][5]}</td>";  //valid_end_date
                 echo "  <td>{$result[0][6]}</td>";  //pause_begin_data
                 echo "  <td>{$result[0][6]}</td>";  //pause_end_date
+                  echo "  <td>{$value[8]}</td>";  //open_id
+                 echo "  <td>{$value[3]}</td>";  //identy_card_number
+                echo "  <td>{$value[4]}</td>";  //birthday
 				echo "  <td class='removeButton'>{$value[10]}</td>";
-				//echo "    <b class='removeButton'>{$value[10]}</b>";
+				//echo "    <b >{$value[10]}</b>";
 				//echo "  </td>";  
                 echo "</tr>";
                 echo "</tbody>";
@@ -146,22 +141,23 @@ else{
 
                 echo "<tbody>";
                 echo "<tr>";
-				echo "  <td>{$value[0]}</td>";  //member_id
-                echo "  <td>{$value[1]}</td>";  //member_name
-                echo "  <td>{$sex_english_to_chinese[$value[2]]}</td>";  //sex
-                echo "  <td>{$value[3]}</td>";  //identy_card_number
-                echo "  <td>{$value[4]}</td>";  //birthday
-                echo "  <td>{$value[5]}</td>";  //phone
+				//echo "  <td>{$value[0]}</td>";  //member_id
                 echo "  <td>{$value[6]}</td>";  //card_id
-                echo "  <td>{$value[8]}</td>";  //open_id
+                echo "  <td>{$value[1]}</td>";  //member_name
+                echo "  <td>{$sex_english_to_chinese[$value[2]]}</td>";  //sex                               
+                
+                echo "  <td>{$value[5]}</td>";  //phone               
                 echo "<td>{$card_tyep_num_to_name[$result[0][7]]}</td>";    //concrete_card_type
                 echo "<td>{$card_status_num_to_name[$result[0][6]]}</td>";    //card_status
                 echo "  <td>{$result[0][2]}</td>";  //valid_begin_date
                 echo "  <td>{$result[0][3]}</td>";  //valid_end_date
                 echo "  <td>{$result[0][4]}</td>";  //pause_begin_data
                 echo "  <td>{$result[0][5]}</td>";  //pause_end_date
+                 echo "  <td>{$value[8]}</td>";  //open_id
+                echo "  <td>{$value[3]}</td>";  //identy_card_number
+                echo "  <td>{$value[4]}</td>";  //birthday
 				echo "  <td class='removeButton'>{$value[10]}</td>";
-				//echo "<b class='removeButton'>{$value[10]}</b>";
+				//echo "<b ></b>";
 				//echo "</td>"; 
                 echo "</tr>";
                 echo "</tbody>";
@@ -215,7 +211,7 @@ else{
 		//获取class为caname的元素 
 		$(".removeButton").click(function() { 
 		var td = $(this); 
-        var txt = td.text(); 
+		var txt = td.text(); 
         console.log("txt is",txt);
 		var input = $("<input type='text' class='add_value'/>");        
 		td.html(input); 
@@ -227,7 +223,7 @@ else{
 		input.blur(function() { 
 		var newtxt = $(this).val(); 
         var memberID = $(this).parent().parent().children("td:eq(0)").text();
-        //console.log("memberID is ",memberID);		
+        console.log("memberID is ",txt);		
 		td.html(newtxt); 
 			
 			$.post("modifyRemarkbackend.php",
@@ -236,7 +232,7 @@ else{
 				member_id:memberID
             },
 			function(data,status){
-				alert(data);
+				//alert(data);
 			});
 		});
 		});
@@ -249,7 +245,7 @@ else{
             },
             function(data,status){
                 console.log("in--------",data);
-               // alert("data is"+data);
+                alert("data is"+data);
             });
         }
 			

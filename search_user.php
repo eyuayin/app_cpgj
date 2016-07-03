@@ -105,6 +105,12 @@
                     </div>
                 </div>
                 <div class="control-group">
+                    <label class="control-label" for="used">已使用次数</label>
+                    <div class="controls">
+                        <input type="text"  class="input-xlarge" id="used" name="used" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
                     <label class="control-label" for="total">总使用次数</label>
                     <div class="controls">
                         <input type="text"  class="input-xlarge" id="total" name="total" required="required" />
@@ -245,6 +251,7 @@ print <<<EOT
                         <th>本周已约课次数</th>
                         <th>每周最多可约课次数</th>
                         <th>修改</th>
+                        <th>解绑</th>
                     </tr>
                 </thead>
 
@@ -267,6 +274,7 @@ print <<<EOT
             <td>{$value_card[2]}</td>
             <td>{$value_card[3]}</td>
             <td class="modify_member_timeCard"><a style="cursor:pointer">修改</a></td>
+            <td class="unbind_member_timeCard"><a href="unbind_openid.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
             </tbody>
 EOT;
@@ -298,6 +306,7 @@ print <<<EOT
                         <th>已用次数</th>
                         <th>总次数</th>
                         <th>修改</th>
+                        <th>解绑</th>
                     </tr>
                 </thead>
 
@@ -320,6 +329,7 @@ print <<<EOT
             <td>{$value_card[8]}</td>
             <td>{$value_card[9]}</td>
             <td  class="modify_member_MeaCard"><a style="cursor:pointer" >修改</a></td>
+            <td class="unbind_member_MeaCard"><a href="unbind_openid.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
             </tbody>
 EOT;
@@ -392,10 +402,9 @@ EOT;
         
         foreach($value as $name)
         {
-                   debug_output("$name is'".$name."'");
+           debug_output("$name is'".$name."'");
            list_member_info($name, $conn); 
         }
-        
     }
     else if($search_type == 2)  //按手机号查询
     {
@@ -453,6 +462,7 @@ EOT;
             var deactive_time = $(this).parent().children("td:eq(11)").text();
             var frozen_time = $(this).parent().children("td:eq(12)").text();
             var unfrozen_time = $(this).parent().children("td:eq(13)").text();
+            var used = $(this).parent().children("td:eq(14)").text();
             var total = $(this).parent().children("td:eq(15)").text();
             //var used = $(this).parent().children("td:eq(15)").text();
 
@@ -467,8 +477,8 @@ EOT;
             $("#deactive_date").val(deactive_time);
             $("#frozen_date").val(frozen_time);
             $("#unfrozen_date").val(unfrozen_time);
+            $("#used").val(used);
             $("#total").val(total);
-            //$("#used").val(used);
             $('#priority option').each(function() {
                 if($(this).val()==priority){
                     console.log("in priority",$(this).val());
