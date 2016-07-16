@@ -40,8 +40,7 @@ print <<<EOT
                                 <div class="controls">
                                     <select id="search_type" name="type" onchange="search_type_change()">
                                         <option value="0" selected="selected">开卡信息查询</option>
-                                        <option value="1" >已到期卡信息查询</option>
-                                        <option value="2" >即将到期卡信息查询</option>
+                                        <option value="2" >到期卡信息查询</option>
                                         <option value="3">出勤频率查询</option>
                                     </select>
                                 </div>
