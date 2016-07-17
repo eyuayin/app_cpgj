@@ -13,6 +13,7 @@
         $input_gender= $sex_chinese_to_english[$_POST['sex_timecard']];
         $input_id_num = $_POST['id_num_timecard'];
         $input_birthday = $_POST['birthday_timecard'];
+        $input_open_id = $_POST['open_id'];
         $input_phone = $_POST['phone_timecard'];
         $input_cardNo = $_POST['card_no_timecard'];
         $card_type = 1;   //计时卡
@@ -25,6 +26,7 @@
         $input_unfrozen_date = $_POST['unfrozen_date_timecard'];
         $input_total_times = $_POST['total_timecard'];
         $input_former_card_id = $former_time_card_id;
+        
     }
     else if(!empty($former_measured_card_id))  //计次卡
     {
@@ -35,6 +37,7 @@
         $input_birthday = $_POST['birthday'];
         $input_phone = $_POST['phone'];
         $input_cardNo = $_POST['card_no'];
+        $input_open_id = $_POST['open_id'];
         $card_type = 2;   //计次卡
         $input_concrete_cardType = $card_tyep_name_to_num[$_POST['card_type']];
         $input_card_priority = $card_priority_name_to_num[$_POST['priority']];
@@ -70,6 +73,7 @@
     debug_output("used times:".$input_used_times);
     debug_output("total times:".$input_total_times);
     debug_output("former card id:".$input_former_card_id);
+    debug_output("open id is:".$input_open_id);
 
     //连接数据库
     $conn = db_connect();
@@ -103,8 +107,8 @@
     }
 
     //更新用户信息
-    $affect_rows = $conn->exec("update member_info_table_cui set member_name='".$input_name."',sex='".$input_gender."',identy_card_number='".$input_id_num."',birthday='".$input_birthday."',phone='".$input_phone."',card_id='".$input_cardNo."' where card_id='".$input_former_card_id."'");
-    debug_output("update member_info_table_cui set member_name='".$input_name."',sex='".$input_gender."',identy_card_number='".$input_id_num."',birthday='".$input_birthday."',phone='".$input_phone."',card_id='".$input_cardNo."' where card_id='".$input_former_card_id."'");
+    $affect_rows = $conn->exec("update member_info_table_cui set member_name='".$input_name."',open_id='".$input_open_id."',sex='".$input_gender."',identy_card_number='".$input_id_num."',birthday='".$input_birthday."',phone='".$input_phone."',card_id='".$input_cardNo."' where card_id='".$input_former_card_id."'");
+    debug_output("update member_info_table_cui set member_name='".$input_name."',open_id='".$input_open_id."',sex='".$input_gender."',identy_card_number='".$input_id_num."',birthday='".$input_birthday."',phone='".$input_phone."',card_id='".$input_cardNo."' where card_id='".$input_former_card_id."'");
     if($conn->errorCode() != '00000')
     {
         echo "会员信息修改失败！请保存截图并发给瑜伽馆工作人员，谢谢！";
