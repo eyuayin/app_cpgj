@@ -5,7 +5,7 @@
     	<link href="/FE_all/css/site.css" rel="stylesheet"/>
       <link href="/FE_all/css/bootstrap-responsive.css" rel="stylesheet"/>
     <script src="FE_all/js/jquery.js"></script>
-
+        
 
     </head>
     <style type="text/css">
@@ -213,7 +213,9 @@
             </form>
         </div>
     </div>
+        <h1>基本信息表</h1>
         <table class="table table-striped table-bordered table-condensed">
+        
 <?php
     require("./constant_var_define.php");
 
@@ -224,7 +226,8 @@
         global $card_priority_num_to_name;
         global $card_status_num_to_name;
         global $sex_english_to_chinese;
-
+     
+        
         if($value[9] == TIME_CARD_TYPE)    //计时卡
         {
             $query_result = $conn->query("select * from time_card_table where card_id='".$value[6]."'");
@@ -278,6 +281,15 @@ print <<<EOT
             </tr>
             </tbody>
 EOT;
+
+        global $note; 
+        $note = $value[10];
+                      
+        global $member_id;
+        $member_id = $value[0];
+        
+        global $member_name;
+        $member_name = $value[1];
         }
         else if($value[9] == MEASURED_CARD_TYPE)   //计次卡
         {
@@ -333,6 +345,15 @@ print <<<EOT
             </tr>
             </tbody>
 EOT;
+
+        global $note;
+        $note = $value[10];
+        
+        global $member_id;
+        $member_id = $value[0];
+        
+         global $member_name;
+        $member_name = $value[1];
         }
         else
         {
@@ -402,7 +423,7 @@ EOT;
         
         foreach($value as $name)
         {
-           debug_output("$name is'".$name."'");
+         //  debug_output("$name is'".$name."'");
            list_member_info($name, $conn); 
         }
     }
@@ -442,6 +463,98 @@ EOT;
 
 ?>
     </table>
+    <div>
+    <div >
+      <div style="float:left;width:50%">   
+        <h1>约课信息表</h1>      
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>序号</th> 
+                    <th>姓名</th>
+                    <th>会员卡号</th>
+                    <th>课程编号</th>
+                    <th>课程名称</th>
+                    <th>上课时间</th>
+                    <th>取消操作</th>
+                </tr>
+            </thead>
+<?php
+  
+    $conn = db_connect();
+
+    //根据 member_name 查出card_id,member_id
+    $query_result = $conn->query("select member_id,card_id from member_info_table where member_name='".$member_name."'");
+    debug_output("select member_id,card_id from member_info_table where member_name='".$member_name."'");
+    $result = $query_result->fetchAll();
+    
+    //循环将所有输入的会员名字的课程列出来
+    foreach($result as $value)
+    {
+        //根据查出的member_id到class_booking_table中查出此用户已选的课程
+        $query = $conn->query("select class_id,canceled from class_booking_table where member_id=$member_id order by class_id desc");
+        debug_output("select class_id,canceled from class_booking_table where member_id=$member_id order by class_id desc");
+        $class_booking_result = $query->fetchAll();
+        GLOBAL $i;
+        $i=0;
+        foreach($class_booking_result as $class_booking_value)
+        {
+            //到class_info_table表中查找出课程名称和课程时间
+            $query = $conn->query("select class_name,class_begin_time from class_info_table where class_id=$class_booking_value[0]");
+            debug_output("select class_name,class_begin_time from class_info_table where class_id=$class_booking_value[0]");
+            $class_info_result = $query->fetchAll();
+            
+            foreach($class_info_result as $class_info_value)
+            {   $i=$i+1;
+                //echo "i is:";
+                //echo $i;
+                //debug_output("查出来的课程开始时间是：".$class_info_value[1]);
+                //debug_output("时间转换：".strtotime('2015-06-03 12:15:00'));
+                //debug_output(date('Y-m-d', strtotime('2015-06-03 12:15:00')));
+                //debug_output(date('Y-m-d', strtotime($class_info_value[1])));
+               
+                
+print <<<EOT
+                    <tbody>
+                    <tr class="$class_booking_value[1]">
+                    <td>$i</td>
+                    <td >$member_name</td>
+                    <td >{$value[1]}</td>
+                    <td >{$class_booking_value[0]}</td>
+                    <td >{$class_info_value[0]}</td>
+                    <td >{$class_info_value[1]}</td>
+                    <td >
+                    <a  href="FE_all/cancel_booking.php?card_id=$value[1]&class_id=$class_booking_value[0]&begin_time=$class_info_value[1]&" onClick="return confirm('确认要取消？')">取消</a>
+                    </td>
+                    </tr>
+                    <script>
+                        $(document).ready(function () {
+                            console.log("dffr");
+                            if($class_booking_value[1] == 1){
+                                
+                                $(".1 a").attr('href','#'); 
+                                $(".1 a").removeAttr("onclick");
+                                $(".1 a").text('已取消');
+                                $(".1 td").css({'background-color':'#B3B3B3'});
+                            }
+
+                        });
+                    </script>
+EOT;
+              
+               
+               
+            }
+        }
+    }
+?>
+                        </table>
+      </div> 
+        
+      <div style="float:left;width:50%"> <h1 style="margin-left:21px">备注栏</h1><div class="removeButton" id="setvalue" style="width:95%;height:100%;border: solid;border-color: #dddddd;background-color: white; margin-left:24px;border-width:1px;border-radius:4px;"><?php echo $note; ?></div></div>
+    </div>
+    </div>
+    </div>
     <script >
         //弹出输入框并保持内容和点击行一致
         $(".modify_member_MeaCard").click(function(){
@@ -680,6 +793,38 @@ EOT;
                 return true;
             }
         }
+        
+        // 点击修改备注
+        $(function() { 
+		//获取class为caname的元素 
+		$(".removeButton").click(function() { 
+		var td = $(this); 
+		var txt = td.text(); 
+        console.log("txt is",txt);
+		var input = $("<textarea rows='14' class='add_value'></textarea>");        
+		td.html(input); 
+        $(".add_value").val(txt);
+		input.click(function() { return false; }); 
+		//获取焦点 
+		input.trigger("focus"); 
+		//文本框失去焦点后提交内容，重新变为文本 
+		input.blur(function() { 
+		var newtxt = $(this).val(); 
+        var memberID = <?php echo $member_id; ?>;
+        console.log("memberID is ",txt);		
+		td.html(newtxt); 
+			
+			$.post("FE_all/modifyRemarkbackend.php",
+            {
+                remarks: newtxt,
+				member_id:memberID
+            },
+			function(data,status){
+				//alert(data);
+			});
+		});
+		});
+		});
     </script>
 </body>
 </html>
