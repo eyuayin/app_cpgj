@@ -5,7 +5,7 @@
     	<link href="/FE_all/css/site.css" rel="stylesheet"/>
       <link href="/FE_all/css/bootstrap-responsive.css" rel="stylesheet"/>
     <script src="FE_all/js/jquery.js"></script>
-
+        
 
     </head>
     <style type="text/css">
@@ -214,6 +214,7 @@
         </div>
     </div>
         <table class="table table-striped table-bordered table-condensed">
+        
 <?php
     require("./constant_var_define.php");
 
@@ -224,7 +225,8 @@
         global $card_priority_num_to_name;
         global $card_status_num_to_name;
         global $sex_english_to_chinese;
-
+     
+        
         if($value[9] == TIME_CARD_TYPE)    //计时卡
         {
             $query_result = $conn->query("select * from time_card_table_cui where card_id='".$value[6]."'");
@@ -250,6 +252,7 @@ print <<<EOT
                         <th>会员卡冻结截止日期</th>
                         <th>本周已约课次数</th>
                         <th>每周最多可约课次数</th>
+                        <th>备注</th>
                         <th>修改</th>
                         <th>解绑</th>
                     </tr>
@@ -273,11 +276,21 @@ print <<<EOT
             <td>{$value_card[7]}</td>
             <td>{$value_card[2]}</td>
             <td>{$value_card[3]}</td>
+            <td>{$value[10]}</td>
             <td class="modify_member_timeCard"><a style="cursor:pointer">修改</a></td>
             <td class="unbind_member_timeCard"><a href="unbind_openid_cui.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
             </tbody>
 EOT;
+
+        global $note; 
+        $note = $value[10];
+        
+              
+        global $member_id;
+        $member_id = $value[0];
+        
+
         }
         else if($value[9] == MEASURED_CARD_TYPE)   //计次卡
         {
@@ -305,6 +318,7 @@ print <<<EOT
                         <th>会员卡冻结截止日期</th>
                         <th>已用次数</th>
                         <th>总次数</th>
+                        <th>备注</th>
                         <th>修改</th>
                         <th>解绑</th>
                     </tr>
@@ -328,11 +342,20 @@ print <<<EOT
             <td>{$value_card[5]}</td>
             <td>{$value_card[8]}</td>
             <td>{$value_card[9]}</td>
+            <td>{$value[10]}</td>
             <td  class="modify_member_MeaCard"><a style="cursor:pointer" >修改</a></td>
             <td class="unbind_member_MeaCard"><a href="unbind_openid_cui.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
             </tbody>
 EOT;
+
+        global $note;
+        $note = $value[10];
+        
+        global $member_id;
+        $member_id = $value[0];
+        
+
         }
         else
         {
@@ -442,6 +465,26 @@ EOT;
 
 ?>
     </table>
+    <div class="container-fluid">
+    <div class="row show-grid">
+      <div style="float:left;width:50%">     
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>序号</th> 
+                    <th>姓名</th>
+                    <th>会员卡号</th>
+                    <th>课程编号</th>
+                    <th>课程名称</th>
+                    <th>上课时间</th>
+                    <th>取消操作</th>
+                </tr>
+            </thead>
+        </table>      
+      </div>
+      <div style="float:left;width:50%"><div class="removeButton" id="setvalue" style="width:100%;height:100%;border: solid;border-color: grey;background-color: white;"><?php echo $note; ?></div></div>
+    </div>
+    </div>
     <script >
         //弹出输入框并保持内容和点击行一致
         $(".modify_member_MeaCard").click(function(){
@@ -680,6 +723,38 @@ EOT;
                 return true;
             }
         }
+        
+        // 点击修改备注
+        $(function() { 
+		//获取class为caname的元素 
+		$(".removeButton").click(function() { 
+		var td = $(this); 
+		var txt = td.text(); 
+        console.log("txt is",txt);
+		var input = $("<textarea rows='14' class='add_value'></textarea>");        
+		td.html(input); 
+        $(".add_value").val(txt);
+		input.click(function() { return false; }); 
+		//获取焦点 
+		input.trigger("focus"); 
+		//文本框失去焦点后提交内容，重新变为文本 
+		input.blur(function() { 
+		var newtxt = $(this).val(); 
+        var memberID = <?php echo $member_id; ?>;
+        console.log("memberID is ",txt);		
+		td.html(newtxt); 
+			
+			$.post("FE_all_cui/modifyRemarkbackend.php",
+            {
+                remarks: newtxt,
+				member_id:memberID
+            },
+			function(data,status){
+				//alert(data);
+			});
+		});
+		});
+		});
     </script>
 </body>
 </html>

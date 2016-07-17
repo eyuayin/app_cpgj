@@ -115,7 +115,7 @@ else{
 
                 echo "<tbody>";
                 echo "<tr>";
-				//echo "  <td >{$value[0]}</td>";  //member_id
+				echo "  <td style='display:none'>{$value[0]}</td>";  //member_id
                 echo "  <td>{$value[6]}</td>";  //card_id
                 echo "  <td>{$value[1]}</td>";  //member_name
                 echo "  <td>{$sex_english_to_chinese[$value[2]]}</td>";  //sex                              
@@ -141,7 +141,7 @@ else{
 
                 echo "<tbody>";
                 echo "<tr>";
-				//echo "  <td>{$value[0]}</td>";  //member_id
+				echo "  <td style='display:none'>{$value[0]}</td>";  //member_id
                 echo "  <td>{$value[6]}</td>";  //card_id
                 echo "  <td>{$value[1]}</td>";  //member_name
                 echo "  <td>{$sex_english_to_chinese[$value[2]]}</td>";  //sex                               
