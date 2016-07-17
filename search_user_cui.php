@@ -213,6 +213,7 @@
             </form>
         </div>
     </div>
+        <h1>基本信息表</h1>
         <table class="table table-striped table-bordered table-condensed">
         
 <?php
@@ -252,7 +253,6 @@ print <<<EOT
                         <th>会员卡冻结截止日期</th>
                         <th>本周已约课次数</th>
                         <th>每周最多可约课次数</th>
-                        <th>备注</th>
                         <th>修改</th>
                         <th>解绑</th>
                     </tr>
@@ -276,7 +276,6 @@ print <<<EOT
             <td>{$value_card[7]}</td>
             <td>{$value_card[2]}</td>
             <td>{$value_card[3]}</td>
-            <td>{$value[10]}</td>
             <td class="modify_member_timeCard"><a style="cursor:pointer">修改</a></td>
             <td class="unbind_member_timeCard"><a href="unbind_openid_cui.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
@@ -318,7 +317,6 @@ print <<<EOT
                         <th>会员卡冻结截止日期</th>
                         <th>已用次数</th>
                         <th>总次数</th>
-                        <th>备注</th>
                         <th>修改</th>
                         <th>解绑</th>
                     </tr>
@@ -342,7 +340,6 @@ print <<<EOT
             <td>{$value_card[5]}</td>
             <td>{$value_card[8]}</td>
             <td>{$value_card[9]}</td>
-            <td>{$value[10]}</td>
             <td  class="modify_member_MeaCard"><a style="cursor:pointer" >修改</a></td>
             <td class="unbind_member_MeaCard"><a href="unbind_openid_cui.php?card_id=$value[6]" style="cursor:pointer">解绑</a></td>
             </tr>
@@ -426,7 +423,7 @@ EOT;
         
         foreach($value as $name)
         {
-           debug_output("$name is'".$name."'");
+         //  debug_output("$name is'".$name."'");
            list_member_info($name, $conn); 
         }
     }
@@ -466,9 +463,10 @@ EOT;
 
 ?>
     </table>
-    <div class="container-fluid">
-    <div class="row show-grid">
-      <div style="float:left;width:50%">     
+    <div>
+    <div >
+      <div style="float:left;width:50%">   
+        <h1>约课信息表</h1>      
         <table class="table table-striped table-bordered table-condensed">
             <thead>
                 <tr>
@@ -494,8 +492,8 @@ EOT;
     foreach($result as $value)
     {
         //根据查出的member_id到class_booking_table_cui中查出此用户已选的课程
-        $query = $conn->query("select class_id,canceled from class_booking_table_cui where member_id=$member_id order by class_id");
-        debug_output("select class_id,canceled from class_booking_table_cui where member_id=$member_id order by class_id");
+        $query = $conn->query("select class_id,canceled from class_booking_table_cui where member_id=$member_id order by class_id desc");
+        debug_output("select class_id,canceled from class_booking_table_cui where member_id=$member_id order by class_id desc");
         $class_booking_result = $query->fetchAll();
         GLOBAL $i;
         $i=0;
@@ -520,7 +518,7 @@ print <<<EOT
                     <tbody>
                     <tr class="$class_booking_value[1]">
                     <td>$i</td>
-                    <td >$input_name</td>
+                    <td >$member_name</td>
                     <td >{$value[1]}</td>
                     <td >{$class_booking_value[0]}</td>
                     <td >{$class_info_value[0]}</td>
@@ -551,10 +549,10 @@ EOT;
     }
 ?>
                         </table>
-                    </div>
-                </div>
-            </div>
-      <div style="float:left;width:50%"><div class="removeButton" id="setvalue" style="width:100%;height:100%;border: solid;border-color: grey;background-color: white;"><?php echo $note; ?></div></div>
+      </div> 
+        
+      <div style="float:left;width:50%"> <h1 style="margin-left:21px">备注栏</h1><div class="removeButton" id="setvalue" style="width:95%;height:100%;border: solid;border-color: #dddddd;background-color: white; margin-left:24px;border-width:1px;border-radius:4px;"><?php echo $note; ?></div></div>
+    </div>
     </div>
     </div>
     <script >
