@@ -56,6 +56,12 @@
                         <input type="text" class="input-xlarge" id="phone" name="phone"/>
                     </div>
                 </div>
+                 <div class="control-group">
+                    <label class="control-label" for="open_id">微信号码</label>
+                    <div class="controls">
+                        <input type="text"  class="input-xlarge" id="open_id" name="open_id" />
+                    </div>
+                </div>
                 <div class="control-group">
                     <label class="control-label" for="card_no">会员卡号</label>
                     <div class="controls">
@@ -152,6 +158,12 @@
                     <label class="control-label" for="phone_timecard">手机号码</label>
                     <div class="controls">
                         <input type="text" class="input-xlarge" id="phone_timecard" name="phone_timecard"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="open_id">微信号码</label>
+                    <div class="controls">
+                        <input type="text"  class="input-xlarge" id="open_id_time" name="open_id" />
                     </div>
                 </div>
                 <div class="control-group">
@@ -578,7 +590,8 @@ EOT;
             var used = $(this).parent().children("td:eq(14)").text();
             var total = $(this).parent().children("td:eq(15)").text();
             //var used = $(this).parent().children("td:eq(15)").text();
-
+            var open_id = $(this).parent().children("td:eq(6)").text();
+            console.log("openid is ",open_id);
             //将原始表格值赋给弹出的表单
             $("#name").val(name);
             $("#former_card_id").val(card_id);
@@ -592,6 +605,7 @@ EOT;
             $("#unfrozen_date").val(unfrozen_time);
             $("#used").val(used);
             $("#total").val(total);
+            $("#open_id").val(open_id);
             $('#priority option').each(function() {
                 if($(this).val()==priority){
                     console.log("in priority",$(this).val());
@@ -637,6 +651,9 @@ EOT;
             var unfrozen_time = $(this).parent().children("td:eq(13)").text();
             var total = $(this).parent().children("td:eq(15)").text();
             //var used = $(this).parent().children("td:eq(15)").text();
+            var open_id = $(this).parent().children("td:eq(6)").text();
+            
+            console.log("openid is :",open_id);
 
             //将原始表格值赋给弹出的表单
             $("#name_timecard").val(name);
@@ -650,6 +667,7 @@ EOT;
             $("#frozen_date_timecard").val(frozen_time);
             $("#unfrozen_date_timecard").val(unfrozen_time);
             $("#total_timecard").val(total);
+            $("#open_id_time").val(open_id);
             //$("#used").val(used);
             $('#priority_timecard option').each(function() {
                 if($(this).val()==priority){
