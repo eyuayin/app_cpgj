@@ -324,4 +324,8 @@
         return $weekArr[$number_wk];
     }
     
+    function get_current_date(){
+        return date("y-m-d",time());
+    }
+    
 ?>
