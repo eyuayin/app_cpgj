@@ -31,7 +31,7 @@ print <<<EOT
                 $.post("queryMemberNameBankend.php",
                 function(data,status)
                 {
-                      console.log("data is:",data);
+                      //console.log("data is:",data);
                       data = JSON.parse(data);
                         //将数组对象转换成数组
                         var i = 0; 
